@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginTop="2dp"
+    android:orientation="vertical"
+    android:tag="cards main container">
+    >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardViewAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/object"
+            android:padding="8dp">
+
+            <EditText
+                android:id="@+id/addComponent_number"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/upNumberAdd"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2.5dp"
+                android:background="@drawable/edit_text"
+                android:ems="10"
+                android:hint="0"
+                android:inputType="textNoSuggestions|number"
+                android:padding="2dp"
+                android:textAlignment="center" />
+
+            <ImageButton
+                android:id="@+id/downNumberAdd"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/addComponent_number"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:background="@null"
+                android:rotation="90"
+                app:srcCompat="@drawable/ic_arrow_drop_up_24dp" />
+
+            <ImageButton
+                android:id="@+id/upNumberAdd"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:background="@null"
+                android:rotation="-90"
+                android:src="@drawable/ic_arrow_drop_up_24dp" />
+
+            <LinearLayout
+                android:id="@+id/l"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/image_component"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    app:srcCompat="@drawable/joystick_overview" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/addComponent_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="30dp"
+                android:layout_toStartOf="@+id/addComponent_number"
+                android:layout_toEndOf="@+id/l"
+                android:layout_toRightOf="@+id/project_photo"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/lostNumber"
+                android:layout_width="108dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
+                android:textAlignment="textEnd"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

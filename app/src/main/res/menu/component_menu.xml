@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_edit_component"
+        android:title="Изменить количество" />
+    <item
+        android:id="@+id/action_delete_component"
+        android:title="Удалить" />
+</menu>

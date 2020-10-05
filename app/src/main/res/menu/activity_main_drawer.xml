@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+   >
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="Профиль" />
+        <item
+            android:id="@+id/nav_projects"
+            android:icon="@drawable/ic_projects"
+            android:title="Мои проекты" />
+        <item
+            android:id="@+id/nav_components"
+            android:icon="@drawable/ic_components"
+            android:title="Библиотека компонетов" />
+        <item
+            android:id="@+id/nav_people"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="Наставники и друзья" />
+    </group>
+
+</menu>

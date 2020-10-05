@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4573FF</color>
+    <color name="colorPrimaryDark">#3567FF</color>
+    <color name="colorStatusBar">#2D5FFD</color>
+    <color name="colorAccent">#868484</color>
+    <color name="toolbar">#3567FF</color>
+
+    <color name="text_checked">#7C7C7C</color>
+    <color name="text_unchecked">#000000</color>
+    <color name="table_1_item_characteristics">#DCDCDC</color>
+    <color name="table_2_item_characteristics">#FFFFFF</color>
+    <color name="background_gray">#ECEBEB</color>
+</resources>
