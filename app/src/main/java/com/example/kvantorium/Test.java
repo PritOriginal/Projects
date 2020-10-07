@@ -65,7 +65,7 @@ public class Test extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         mSettings = getSharedPreferences("MyPref", MODE_PRIVATE);
-        login();
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,52 +78,8 @@ public class Test extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //navigationView.setCheckedItem();
-
-        GetUser task = new GetUser(this, USER_ID);
-        task.execute();
+        login();
         setItem();
-
-        String data;
- //       Server server = new Server(HOST, PORT);
-        try {
-        //    data = Server.connect();
-
-        //    System.out.println(data);
-
-
-/*
-            server.openConnection();
-            server.sendData("test");
-            data = server.getData();
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    data,
-                    Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-*/
-        } catch (Exception e) {
-            e.printStackTrace();
-  //          server = null;
-        }
-
-
-
-
-        dbHelper = new DBHelper(this);
-        database = dbHelper.getWritableDatabase();
-        //dbHelper.onCreate( database);
-       // ContentValues contentValues1 = new ContentValues();
-       // contentValues1.put(dbHelper.ID_USER, 0);
-       // contentValues1.put(dbHelper.NAME, "ПрокиЭ");
-       // contentValues1.put(dbHelper.DESCRIPTION, "Описание");
-      //  database.insert(dbHelper.TABLE_NAME, null, contentValues1);
-
-
-  //      user.setFirstName("Степан");
-  //      user.setSecondName("Махнатеев");
-  //      user.setRaiting(56);
     }
 
     @Override
@@ -154,6 +110,9 @@ public class Test extends AppCompatActivity
         if (id == R.id.action_exit) {
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putInt("USER_ID", Integer.parseInt("0"));
+            editor.putBoolean("MENTOR", false);
+            editor.putString("NAME", "");
+            editor.putString("SECOND_NAME", "");
             editor.apply();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -259,6 +218,22 @@ public class Test extends AppCompatActivity
 
             if (mSettings.contains("USER_ID") && mSettings.getInt("USER_ID", 0) != 0) {
                 USER_ID = mSettings.getInt("USER_ID", 0);
+
+                if (mSettings.contains("MENTOR") && mSettings.getBoolean("MENTOR", false) == true){
+                    Intent intent = new Intent(this, Main2Activity.class);
+                    startActivity(intent);
+                }
+                if ((mSettings.contains("NAME") && mSettings.getString("NAME", "") == "") && (mSettings.contains("SECOND_NAME") && mSettings.getString("SECOND_NAME", "") == "")) {
+                    GetUser task = new GetUser(this, USER_ID);
+                    task.execute();
+                } else {
+                    user.setFirstName(mSettings.getString("NAME", ""));
+                    user.setSecondName(mSettings.getString("SECOND_NAME", ""));
+                    System.out.println("USER: " + user.getSecondname() + " " + user.getFirstName());
+                    View header = navigationView.getHeaderView(0);
+                    title_name = (TextView)header.findViewById(R.id.title_name);
+                    title_name.setText(user.getSecondname() + " " + user.getFirstName());
+                }
             } else {
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);

@@ -85,6 +85,9 @@ public class LoginActivity extends AppCompatActivity implements OnRequestLoginLi
             // Запоминаем данные
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putInt("USER_ID", Integer.parseInt(request.get(1)));
+            editor.putBoolean("MENTOR", Integer.parseInt(request.get(2)) == 1 ? true : false);
+            editor.putString("NAME", request.get(3));
+            editor.putString("SECOND_NAME", request.get(4));
             editor.apply();
 
             Intent intent = new Intent(this, Test.class);

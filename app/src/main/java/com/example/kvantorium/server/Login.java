@@ -108,8 +108,14 @@ public class Login extends AsyncTask<URL, Integer, ArrayList<String>> {
                 JSONObject JObject = new JSONObject(result);
                 String request_ = JObject.getString("request");
                 int id = JObject.getInt("id");
+                int mentor = JObject.getInt("mentor");
+                String name = JObject.getString("name");
+                String secondname = JObject.getString("secondname");
                 request.add(request_);
                 request.add(String.valueOf(id));
+                request.add(String.valueOf(mentor));
+                request.add(name);
+                request.add(secondname);
             } finally{
                 if (conn != null) {
                     conn.disconnect();

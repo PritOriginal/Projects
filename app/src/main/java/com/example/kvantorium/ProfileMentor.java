@@ -8,22 +8,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.kvantorium.server.GetAllProjectsUser;
 import com.example.kvantorium.server.GetUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Profile extends Fragment implements OnUserListener {
+public class ProfileMentor extends Fragment implements OnUserListener {
 
-    Test test;
+    Main2Activity main;
 
     TextView name;
     TextView vk;
@@ -34,7 +31,7 @@ public class Profile extends Fragment implements OnUserListener {
     List<Integer> achievements = new ArrayList<Integer>();
     User user = new User();
 
-    public Profile() {
+    public ProfileMentor() {
     }
 
     @Override
@@ -49,16 +46,15 @@ public class Profile extends Fragment implements OnUserListener {
         //name.setText("Махнатеев Степан");
 
         recyclerView = (RecyclerView)view.findViewById(R.id.rvAchievement);
-        LinearLayoutManager llm = new LinearLayoutManager(test.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager llm = new LinearLayoutManager(main.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(llm);
         achievements.add(0);
         achievements.add(1);
-        adapter = new RVAdapterAchievement(test, achievements);
+        adapter = new RVAdapterAchievement(main, achievements);
         recyclerView.setAdapter(adapter);
-        //GetUser task = new GetUser(this, test.USER_ID);
+        //GetUser task = new GetUser(this, main.USER_ID);
         //task.execute();
         setProfile();
-
         vk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,15 +69,14 @@ public class Profile extends Fragment implements OnUserListener {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof Test) {
-            this.test = (Test) context;
+        if (context instanceof Main2Activity) {
+            this.main = (Main2Activity) context;
         }
     }
 
     public void setProfile(){
-        name.setText(test.user.getSecondname() + " " + test.user.getFirstName());
+        name.setText(main.user.getSecondname() + " " + main.user.getFirstName());
     }
-
 
     @Override
     public void onUserCompleted(User us) {
