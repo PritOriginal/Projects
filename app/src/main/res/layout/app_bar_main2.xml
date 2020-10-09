@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_mentor"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -21,7 +21,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
-        android:id="@+id/con"
+        android:id="@+id/con_mentor"
         layout="@layout/content_main2" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -229,10 +229,10 @@ public class Test extends AppCompatActivity
                 } else {
                     user.setFirstName(mSettings.getString("NAME", ""));
                     user.setSecondName(mSettings.getString("SECOND_NAME", ""));
-                    System.out.println("USER: " + user.getSecondname() + " " + user.getFirstName());
+                    System.out.println("USER: " + user.getSecondName() + " " + user.getFirstName());
                     View header = navigationView.getHeaderView(0);
                     title_name = (TextView)header.findViewById(R.id.title_name);
-                    title_name.setText(user.getSecondname() + " " + user.getFirstName());
+                    title_name.setText(user.getSecondName() + " " + user.getFirstName());
                 }
             } else {
                 Intent intent = new Intent(this, LoginActivity.class);
@@ -241,13 +241,6 @@ public class Test extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // sPref = getPreferences(MODE_PRIVATE);
-       // String ID = sPref.getString("USER_ID", "");
-       // System.out.println("USER_ID: " + ID);
-       // if (ID.equals("")) {
-       //     Intent intent = new Intent(this, LoginActivity.class);
-       //     startActivity(intent);
-       // }
     }
 
     @Override
@@ -259,13 +252,6 @@ public class Test extends AppCompatActivity
                 intent.putExtra("idUser", USER_ID);
                 startActivity(intent);
                 break;
-       /*     case R.id.clear:
-                //database.delete("projects", null, null);
-                //database.delete(dbHelper.TABLE_NAME, null, null);
-                Intent intent1 = new Intent(Test.this, Test.class);
-                startActivity(intent1);
-                break;
-        */
         }
     }
 
@@ -273,10 +259,10 @@ public class Test extends AppCompatActivity
     public void onUserCompleted(User us) {
         user = us;
         user.setRaiting(100);
-        System.out.println("USER: " + user.getSecondname() + " " + user.getFirstName());
+        System.out.println("USER: " + user.getSecondName() + " " + user.getFirstName());
         View header = navigationView.getHeaderView(0);
         title_name = (TextView)header.findViewById(R.id.title_name);
-        title_name.setText(user.getSecondname() + " " + user.getFirstName());
+        title_name.setText(user.getSecondName() + " " + user.getFirstName());
     }
 
     @Override

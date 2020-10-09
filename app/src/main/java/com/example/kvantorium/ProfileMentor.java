@@ -75,14 +75,14 @@ public class ProfileMentor extends Fragment implements OnUserListener {
     }
 
     public void setProfile(){
-        name.setText(main.user.getSecondname() + " " + main.user.getFirstName());
+        name.setText(main.user.getSecondName() + " " + main.user.getFirstName());
     }
 
     @Override
     public void onUserCompleted(User us) {
         user = us;
         user.setRaiting(100);
-        name.setText(user.getSecondname() + " " + user.getFirstName());
+        name.setText(user.getSecondName() + " " + user.getFirstName());
         raiting.setText(String.valueOf(user.getRaiting()));
     }
 

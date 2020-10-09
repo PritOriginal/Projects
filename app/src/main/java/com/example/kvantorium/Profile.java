@@ -79,7 +79,7 @@ public class Profile extends Fragment implements OnUserListener {
     }
 
     public void setProfile(){
-        name.setText(test.user.getSecondname() + " " + test.user.getFirstName());
+        name.setText(test.user.getSecondName() + " " + test.user.getFirstName());
     }
 
 
@@ -87,7 +87,7 @@ public class Profile extends Fragment implements OnUserListener {
     public void onUserCompleted(User us) {
         user = us;
         user.setRaiting(100);
-        name.setText(user.getSecondname() + " " + user.getFirstName());
+        name.setText(user.getSecondName() + " " + user.getFirstName());
         raiting.setText(String.valueOf(user.getRaiting()));
     }
 

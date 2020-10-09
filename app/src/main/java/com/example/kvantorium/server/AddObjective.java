@@ -53,7 +53,7 @@ public class AddObjective extends AsyncTask<URL, Integer, ArrayList<String>> {
 
         try {
 //            String params = "REQUEST=js";
-            String url = "http://192.168.243.90/PythonProject/server_test.py";
+            String url = "http://192.168.1.69/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 

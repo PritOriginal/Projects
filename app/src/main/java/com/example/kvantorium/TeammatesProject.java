@@ -18,9 +18,9 @@ import java.util.List;
 public class TeammatesProject extends Fragment implements OnTeammatesListener {
     ProjectActivity context;
     RecyclerView recyclerView;
-    RVAdapterTeammates adapter;
+    RVAdapterUsers adapter;
     ProgressBar progressBar;
-    List<Teammate> teammates = new ArrayList<Teammate>();
+    List<User> teammates = new ArrayList<User>();
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.teammates_project, container,
@@ -40,7 +40,7 @@ public class TeammatesProject extends Fragment implements OnTeammatesListener {
     }
 
     public void setTeammates(){
-        adapter = new RVAdapterTeammates(context, teammates);
+        adapter = new RVAdapterUsers(context, teammates);
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
@@ -56,7 +56,7 @@ public class TeammatesProject extends Fragment implements OnTeammatesListener {
     }
 
     @Override
-    public void onTeammatesCompleted(ArrayList<Teammate> teammates) {
+    public void onTeammatesCompleted(ArrayList<User> teammates) {
         this.teammates = teammates;
         setTeammates();
     }

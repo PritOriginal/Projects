@@ -1,9 +1,37 @@
 package com.example.kvantorium;
 
 public class User {
+    private int id;
     private String firstName;
     private String secondName;
     private int raiting;
+    private String role;
+    private int group;
+
+    public User(){
+    }
+
+    public User(int id, String firstName, String secondName, String role) {
+        this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.role = role;
+    }
+
+    public User(int id, String firstName, String secondName, String role, int group) {
+        this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.role = role;
+        this.group = group;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -12,7 +40,7 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getSecondname() {
+    public String getSecondName() {
         return secondName;
     }
     public void setSecondName(String secondName) {
@@ -24,5 +52,18 @@ public class User {
     }
     public void setRaiting(int raiting) {
         this.raiting = raiting;
+    }
+
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+    }
+
+    public int getGroup() {
+        return group;
+    }
+    public void setGroup(int group) {
+        this.group = group;
     }
 }

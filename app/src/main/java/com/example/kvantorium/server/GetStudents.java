@@ -2,8 +2,9 @@ package com.example.kvantorium.server;
 
 import android.os.AsyncTask;
 
-import com.example.kvantorium.Component;
-import com.example.kvantorium.OnComponentsListener;
+import com.example.kvantorium.OnUsersListener;
+import com.example.kvantorium.Teammate;
+import com.example.kvantorium.User;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,23 +21,18 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GetComponent extends AsyncTask<URL, Integer, ArrayList<Component>> {
-    private OnComponentsListener mListener;
-    ArrayList<Component> components = new ArrayList<Component>();
-    int id;
+public class GetStudents extends AsyncTask<URL, Integer, ArrayList<User>> {
+    private OnUsersListener mListener;
+    ArrayList<User> users = new ArrayList<User>();
 
-    public GetComponent (OnComponentsListener mListener, int id) {
+    public GetStudents(OnUsersListener mListener) {
         this.mListener = mListener;
-        this.id = id;
     }
 
     @Override
-    protected ArrayList<Component> doInBackground(URL... urls) {
+    protected ArrayList<User> doInBackground(URL... urls) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("REQUEST", "getComponent");
-        params.put("ID", String.valueOf(id));
-
-        String data = null;
+        params.put("REQUEST", "getStudents");
 
         StringBuilder sbParams = new StringBuilder();
         int i = 0;
@@ -56,7 +52,6 @@ public class GetComponent extends AsyncTask<URL, Integer, ArrayList<Component>> 
 
 
         try {
-//            String params = "REQUEST=js";
             String url = "http://192.168.1.69/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
@@ -73,16 +68,6 @@ public class GetComponent extends AsyncTask<URL, Integer, ArrayList<Component>> 
                 conn.getOutputStream().write(postDataBytes);
 
                 conn.connect();
-
-                /*
-                String paramsString = sbParams.toString();
-                //  String paramsString = "a=test";
-
-                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                wr.writeBytes(paramsString);
-                wr.flush();
-                wr.close();
-                 */
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -99,34 +84,22 @@ public class GetComponent extends AsyncTask<URL, Integer, ArrayList<Component>> 
 
                 String result = result1.toString();
                 System.out.println("From server: " + result);
-/*
-                JSONObject JObject = new JSONObject(result);
-                String name = JObject.getString("name");
-                int count = JObject.getInt("count");
-                Component c = new Component();
-                c.setNameComponent(name);
-                c.setNumber(count);
-                components.add(c);
-*/
-                JSONObject JObject = new JSONObject(result);
 
-                int id = JObject.getInt("id");
-                String name = JObject.getString("name");
-                int count = JObject.getInt("count");
-                String image = JObject.getString("image");
-                String description = JObject.getString("description");
-                String characteristics = JObject.getString("characteristics");
-                String documentation = JObject.getString("documentation");
-                Component c = new Component();
-                c.setId(id);
-                c.setNameComponent(name);
-                c.setNumber(count);
-                c.setImage(image);
-                c.setDescription(description);
-                c.setCharacteristics(characteristics);
-                c.setDocumentation(documentation);
-                components.add(c);
+                JSONObject JObject = new JSONObject(result);
+                JSONArray jArray = JObject.getJSONArray("users");
+                for (i = 0; i < jArray.length(); i++) {
 
+                    JSONObject jObject = jArray.getJSONObject(i);
+
+                    int id = jObject.getInt("id");
+                    String firstName = jObject.getString("name");
+                    String secondName = jObject.getString("secondname");
+                    int group = jObject.getInt("class");
+                    //String role = jObject.getString("role");
+                    String role = "";
+                    User user = new User(id, firstName, secondName, role, group);
+                    users.add(user);
+                }
             } finally{
                 if (conn != null) {
                     conn.disconnect();
@@ -135,15 +108,13 @@ public class GetComponent extends AsyncTask<URL, Integer, ArrayList<Component>> 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return components;
+        return users;
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Component> components) {
-        //do stuff
-        //super.onPostExecute(components);
+    protected void onPostExecute(ArrayList<User> users) {
         if (mListener != null) {
-            mListener.onComponentsCompleted(components);
+            mListener.onUsersCompleted(users);
         }
     }
 }

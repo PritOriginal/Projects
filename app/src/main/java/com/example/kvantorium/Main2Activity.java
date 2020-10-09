@@ -43,19 +43,27 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         mSettings = getSharedPreferences("MyPref", MODE_PRIVATE);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_mentor);
         setSupportActionBar(toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout_mentor);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view_mentor);
         navigationView.setNavigationItemSelectedListener(this);
-        //GetUser task = new GetUser(this, USER_ID);
-        //task.execute();
         login();
         setItem();
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_mentor);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -105,13 +113,13 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         // Вставляем фрагмент, заменяя текущий фрагмент
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.con, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.con_mentor, fragment).commit();
         }
         // Выделяем выбранный пункт меню в шторке
         item.setChecked(true);
         // Выводим выбранный пункт в заголовке
         setTitle(item.getTitle());
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_mentor);
         drawer.closeDrawer(GravityCompat.START);
         //   myProject();
         return true;
@@ -139,7 +147,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             // Вставляем фрагмент, заменяя текущий фрагмент
             if (fragment != null) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.con, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.con_mentor, fragment).commit();
             }
             // Выделяем выбранный пункт меню в шторке
             item.setChecked(true);
@@ -156,7 +164,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             // Вставляем фрагмент, заменяя текущий фрагмент
             if (fragment != null) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.con, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.con_mentor, fragment).commit();
             }
             // Выделяем выбранный пункт меню в шторке
             item.setChecked(true);
@@ -177,10 +185,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 } else {
                     user.setFirstName(mSettings.getString("NAME", ""));
                     user.setSecondName(mSettings.getString("SECOND_NAME", ""));
-                    System.out.println("USER: " + user.getSecondname() + " " + user.getFirstName());
+                    System.out.println("USER: " + user.getSecondName() + " " + user.getFirstName());
                     View header = navigationView.getHeaderView(0);
                     title_name = (TextView)header.findViewById(R.id.title_name);
-                    title_name.setText(user.getSecondname() + " " + user.getFirstName());
+                    title_name.setText(user.getSecondName() + " " + user.getFirstName());
                 }
             } else {
                 Intent intent = new Intent(this, LoginActivity.class);
@@ -195,10 +203,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     public void onUserCompleted(User us) {
         user = us;
         user.setRaiting(100);
-        System.out.println("USER: " + user.getSecondname() + " " + user.getFirstName());
+        System.out.println("USER: " + user.getSecondName() + " " + user.getFirstName());
         View header = navigationView.getHeaderView(0);
         title_name = (TextView)header.findViewById(R.id.title_name);
-        title_name.setText(user.getSecondname() + " " + user.getFirstName());
+        title_name.setText(user.getSecondName() + " " + user.getFirstName());
     }
 
     @Override

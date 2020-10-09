@@ -24,8 +24,8 @@ public class People extends Fragment implements OnMentorsListener {
     ImageView mentorsImage;
     FrameLayout frameLayout;
     RecyclerView recyclerView;
-    RVAdapterTeammates adapter;
-    List<Teammate> mentors = new ArrayList<Teammate>();
+    RVAdapterUsers adapter;
+    List<User> mentors = new ArrayList<User>();
 
     boolean mentorsVisible = true;
     Test test;
@@ -82,9 +82,9 @@ public class People extends Fragment implements OnMentorsListener {
     }
 
     @Override
-    public void onMentorsCompleted(ArrayList<Teammate> ment) {
-        mentors = ment;
-        adapter = new RVAdapterTeammates(test, mentors);
+    public void onMentorsCompleted(ArrayList<User> us) {
+        mentors = us;
+        adapter = new RVAdapterUsers(test, mentors);
         recyclerView.setAdapter(adapter);
     }
 

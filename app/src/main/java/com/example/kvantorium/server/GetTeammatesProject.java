@@ -6,6 +6,7 @@ import android.widget.ProgressBar;
 import com.example.kvantorium.Objective;
 import com.example.kvantorium.OnTeammatesListener;
 import com.example.kvantorium.Teammate;
+import com.example.kvantorium.User;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,10 +23,10 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GetTeammatesProject extends AsyncTask<URL, Integer, ArrayList<Teammate>> {
+public class GetTeammatesProject extends AsyncTask<URL, Integer, ArrayList<User>> {
     private OnTeammatesListener mListener;
     ProgressBar progressBar;
-    ArrayList<Teammate> teammates = new ArrayList<Teammate>();
+    ArrayList<User> users = new ArrayList<User>();
     int id;
 
     public GetTeammatesProject(OnTeammatesListener mListener, int id, ProgressBar progressBar) {
@@ -35,7 +36,7 @@ public class GetTeammatesProject extends AsyncTask<URL, Integer, ArrayList<Teamm
     }
 
     @Override
-    protected ArrayList<Teammate> doInBackground(URL... urls) {
+    protected ArrayList<User> doInBackground(URL... urls) {
         HashMap<String, String> params = new HashMap<>();
         params.put("REQUEST", "getTeammates");
         params.put("ID", String.valueOf(id));
@@ -58,7 +59,7 @@ public class GetTeammatesProject extends AsyncTask<URL, Integer, ArrayList<Teamm
 
 
         try {
-            String url = "http://192.168.243.90/PythonProject/server_test.py";
+            String url = "http://192.168.1.69/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 
@@ -101,8 +102,8 @@ public class GetTeammatesProject extends AsyncTask<URL, Integer, ArrayList<Teamm
                     String firstName = jObject.getString("name");
                     String secondName = jObject.getString("secondname");
                     String role = jObject.getString("role");
-                    Teammate teammate = new Teammate(id, firstName, secondName, role);
-                    teammates.add(teammate);
+                    User user = new User(id, firstName, secondName, role);
+                    users.add(user);
                 }
             } finally{
                 if (conn != null) {
@@ -112,7 +113,7 @@ public class GetTeammatesProject extends AsyncTask<URL, Integer, ArrayList<Teamm
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return teammates;
+        return users;
     }
     @Override
     protected void onProgressUpdate(Integer... values) {
@@ -123,9 +124,9 @@ public class GetTeammatesProject extends AsyncTask<URL, Integer, ArrayList<Teamm
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Teammate> teammates) {
+    protected void onPostExecute(ArrayList<User> users) {
         if (mListener != null) {
-            mListener.onTeammatesCompleted(teammates);
+            mListener.onTeammatesCompleted(users);
         }
     }
 }

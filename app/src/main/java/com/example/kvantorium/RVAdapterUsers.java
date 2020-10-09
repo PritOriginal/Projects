@@ -12,31 +12,31 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class RVAdapterTeammates extends RecyclerView.Adapter<RVAdapterTeammates.ViewHolder> {
+public class RVAdapterUsers extends RecyclerView.Adapter<RVAdapterUsers.ViewHolder> {
     @NonNull
-    List<Teammate> teammates;
+    List<User> users;
     private Context mContext;
-    RVAdapterTeammates (Context mContext, List<Teammate> teammates) {
-        this.teammates = teammates;
+    RVAdapterUsers (Context mContext, List<User> users) {
+        this.users = users;
         this.mContext = mContext;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.teammate_view, viewGroup, false);
-        RVAdapterTeammates.ViewHolder pvh = new RVAdapterTeammates.ViewHolder(v);
+        RVAdapterUsers.ViewHolder pvh = new RVAdapterUsers.ViewHolder(v);
         return pvh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-        viewHolder.name_teammate.setText(teammates.get(i).getSecondName() + " " + teammates.get(i).getFirstName());
-        viewHolder.role.setText(teammates.get(i).getRole());
+        viewHolder.name_teammate.setText(users.get(i).getSecondName() + " " + users.get(i).getFirstName());
+        viewHolder.role.setText(users.get(i).getRole());
     }
 
     @Override
     public int getItemCount() {
-        return teammates.size();
+        return users.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cv;

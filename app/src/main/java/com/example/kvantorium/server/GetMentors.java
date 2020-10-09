@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.example.kvantorium.OnMentorsListener;
 import com.example.kvantorium.Teammate;
+import com.example.kvantorium.User;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,16 +21,16 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GetMentors extends AsyncTask<URL, Integer, ArrayList<Teammate>> {
+public class GetMentors extends AsyncTask<URL, Integer, ArrayList<User>> {
     private OnMentorsListener mListener;
-    ArrayList<Teammate> mentors = new ArrayList<Teammate>();
+    ArrayList<User> mentors = new ArrayList<User>();
 
     public GetMentors(OnMentorsListener mListener) {
         this.mListener = mListener;
     }
 
     @Override
-    protected ArrayList<Teammate> doInBackground(URL... urls) {
+    protected ArrayList<User> doInBackground(URL... urls) {
         HashMap<String, String> params = new HashMap<>();
         params.put("REQUEST", "getMentors");
 
@@ -51,7 +52,7 @@ public class GetMentors extends AsyncTask<URL, Integer, ArrayList<Teammate>> {
 
 
         try {
-            String url = "http://192.168.243.90/PythonProject/server_test.py";
+            String url = "http://192.168.1.69/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 
@@ -94,7 +95,7 @@ public class GetMentors extends AsyncTask<URL, Integer, ArrayList<Teammate>> {
                     String firstName = jObject.getString("patronymic");
                     String secondName = jObject.getString("name");
                     String role = "Наставник " + jObject.getString("role");
-                    Teammate mentor = new Teammate(id, firstName, secondName, role);
+                    User mentor = new User(id, firstName, secondName, role);
                     mentors.add(mentor);
                 }
             } finally{
@@ -108,9 +109,9 @@ public class GetMentors extends AsyncTask<URL, Integer, ArrayList<Teammate>> {
         return mentors;
     }
     @Override
-    protected void onPostExecute(ArrayList<Teammate> teammates) {
+    protected void onPostExecute(ArrayList<User> mentors) {
         if (mListener != null) {
-            mListener.onMentorsCompleted(teammates);
+            mListener.onMentorsCompleted(mentors);
         }
     }
 }
