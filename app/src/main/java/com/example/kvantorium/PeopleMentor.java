@@ -66,34 +66,22 @@ public class PeopleMentor extends Fragment implements OnUsersListener {
                     users_.add(users.get(i));
                     users_group.add(users_);
                 }
-               //group.add(users.get(i).getGroup());
             }
         }
-/*
-        Collections.sort(users_group, new Comparator<ArrayList<ArrayList<User>>>() {
-
-            @Override
-            public int compare(ArrayList<ArrayList<User>> o1, ArrayList<ArrayList<User>> o2) {
-                return o1.get(i).compareTo(o2.indexOf(group));
-            }
-        });
- */
         ArrayList<ArrayList<User>> users_group_ = new ArrayList<ArrayList<User>>();
         int g = Collections.min(group);
         int h = 0;
+        int u = 0;
         for (int i = 0; i < users_group.size(); i++) {
-            /*
-            for (int j = 0; j < group.size(); j++) {
-                if (group.get(j) < g) {
-                    g = group.get(j);
-                    h = j;
+            int max = Collections.max(group);
+            while (u < max){
+                if (group.indexOf(u+1) > -1) {
+                    users_group_.add(users_group.get(group.indexOf(u+1)));
+                    u++;
+                    break;
                 }
-                if (j == users_group.size() - 1) {
-                    users_group_.add(users_group.get(group.indexOf(j)));
-                }
+                u++;
             }
-             */
-            users_group_.add(users_group.get(group.indexOf(i+1)));
             Collections.sort(users_group_.get(i), new Comparator<User>() {
                 @Override
                 public int compare(User o1, User o2) {
@@ -102,13 +90,10 @@ public class PeopleMentor extends Fragment implements OnUsersListener {
             });
         }
         Collections.sort(group);
-     //   System.out.println(users_group);
         update(group, users_group_);
     }
 
     public void update(final ArrayList<Integer> group, ArrayList<ArrayList<User>> users_group) {
-        System.out.println(group.size() + "  и  " + users_group.size());
-
         for (int i = 0; i < users_group.size(); i++) {
             final View v1 = getLayoutInflater().inflate(R.layout.group_list, null);
             TextView t1 = (TextView) v1.findViewById(R.id.name_group);
