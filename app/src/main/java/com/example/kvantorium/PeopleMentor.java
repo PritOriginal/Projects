@@ -8,16 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.kvantorium.server.GetStudents;
+import com.example.kvantorium.server.GetTimeGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class PeopleMentor extends Fragment implements OnUsersListener {
 
@@ -69,8 +74,6 @@ public class PeopleMentor extends Fragment implements OnUsersListener {
             }
         }
         ArrayList<ArrayList<User>> users_group_ = new ArrayList<ArrayList<User>>();
-        int g = Collections.min(group);
-        int h = 0;
         int u = 0;
         for (int i = 0; i < users_group.size(); i++) {
             int max = Collections.max(group);
@@ -98,13 +101,46 @@ public class PeopleMentor extends Fragment implements OnUsersListener {
             final View v1 = getLayoutInflater().inflate(R.layout.group_list, null);
             TextView t1 = (TextView) v1.findViewById(R.id.name_group);
             t1.setText("Группа " + group.get(i));
-            RecyclerView groupList = (RecyclerView) v1.findViewById(R.id.group_list);
+
+            final RecyclerView groupList = (RecyclerView) v1.findViewById(R.id.group_list);
             LinearLayoutManager llm = new LinearLayoutManager(main.getApplicationContext());
             groupList.setLayoutManager(llm);
 
             adapter = new RVAdapterUsers(main, users_group.get(i));
             groupList.setAdapter(adapter);
             linearLayout.addView(v1);
+
+            final ImageView group_open = (ImageView)v1.findViewById(R.id.group_open);
+            LinearLayout title_group = (LinearLayout)v1.findViewById(R.id.title_group);
+            title_group.setOnClickListener(new View.OnClickListener() {
+                boolean visible = true;
+                @Override
+                public void onClick(View v) {
+                    if (visible) {
+                        groupList.setVisibility(View.GONE);
+                        group_open.setImageResource(R.drawable.ic_expand_more_black_24dp);
+                        visible = !visible;
+                    } else {
+                        groupList.setVisibility(View.VISIBLE);
+                        group_open.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                        visible = !visible;
+                    }
+                }
+            });
+
+            TextView people_count_group = (TextView)v1.findViewById(R.id.people_count_group);
+            people_count_group.setText(String.valueOf(adapter.getItemCount()) + " чел.");
+
+            TextView time_group = (TextView)v1.findViewById(R.id.time_group);
+            GetTimeGroup getTimeGroup = new GetTimeGroup(group.get(i));
+            getTimeGroup.execute();
+            try {
+                time_group.setText(getTimeGroup.get());
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
