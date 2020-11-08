@@ -11,19 +11,21 @@
         android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="false"
+        android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/object"
-            android:padding="8dp">
+            android:paddingRight="8dp"
+            android:paddingLeft="2dp"
+            >
 
             <ImageView
                 android:id="@+id/teammate_kvant"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 app:srcCompat="@drawable/it_kvantum" />
 
             <TextView
@@ -32,21 +34,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="22dp"
                 android:layout_toEndOf="@+id/teammate_kvant"
                 android:text="Махнатеев Степан"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/teammate_role"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/teammate_name"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/teammate_kvant"
-                android:text="Программист" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

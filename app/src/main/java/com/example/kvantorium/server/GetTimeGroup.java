@@ -19,10 +19,10 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GetTimeGroup extends AsyncTask<URL, Integer, String> {
+public class GetTimeGroup extends AsyncTask<URL, Integer, ArrayList<String>> {
     private OnRequestLoginListener mListener;
 
-    String time;
+    ArrayList<String> time = new ArrayList<String>();
     int group;
 
     public GetTimeGroup(int group) {
@@ -30,7 +30,7 @@ public class GetTimeGroup extends AsyncTask<URL, Integer, String> {
     }
 
     @Override
-    protected String doInBackground(URL... urls) {
+    protected ArrayList<String> doInBackground(URL... urls) {
         HashMap<String, String> params = new HashMap<>();
         params.put("REQUEST", "getTimeGroup");
         params.put("ID", String.valueOf(group));
@@ -53,7 +53,7 @@ public class GetTimeGroup extends AsyncTask<URL, Integer, String> {
 
 
         try {
-            String url = "http://192.168.1.69/PythonProject/server_test.py";
+            String url = "http://192.168.243.90/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 
@@ -86,7 +86,8 @@ public class GetTimeGroup extends AsyncTask<URL, Integer, String> {
                 System.out.println("From server: " + result);
 
                 JSONObject JObject = new JSONObject(result);
-                time = JObject.getString("time");
+                time.add(JObject.getString("time"));
+                time.add(JObject.getString("day_week"));
             } finally{
                 if (conn != null) {
                     conn.disconnect();

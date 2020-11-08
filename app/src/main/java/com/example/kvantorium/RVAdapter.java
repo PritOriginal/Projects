@@ -23,12 +23,10 @@ import java.util.List;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @NonNull
     List<Project> projects;
-    SQLiteDatabase db;
     ArrayList<Integer> image = new ArrayList<>();
     private Context mContext;
-    RVAdapter(Context mContext, List<Project> projects, SQLiteDatabase db) {
+    RVAdapter(Context mContext, List<Project> projects) {
         this.projects = projects;
-        this.db = db;
         this.mContext = mContext;
 
         image.add(R.drawable.check);

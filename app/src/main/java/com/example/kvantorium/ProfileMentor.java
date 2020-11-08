@@ -2,7 +2,6 @@ package com.example.kvantorium;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.example.kvantorium.server.GetUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +34,7 @@ public class ProfileMentor extends Fragment implements OnUserListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_profile, container,
+        View view = inflater.inflate(R.layout.profile_mentor_fragment, container,
                 false);
         name = (TextView) view.findViewById(R.id.profile_name);
         vk = (TextView) view.findViewById(R.id.profile_vk);
@@ -52,8 +49,6 @@ public class ProfileMentor extends Fragment implements OnUserListener {
         achievements.add(1);
         adapter = new RVAdapterAchievement(main, achievements);
         recyclerView.setAdapter(adapter);
-        //GetUser task = new GetUser(this, main.USER_ID);
-        //task.execute();
         setProfile();
         vk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,4 +85,5 @@ public class ProfileMentor extends Fragment implements OnUserListener {
     public void onUserError(String error) {
 
     }
+
 }

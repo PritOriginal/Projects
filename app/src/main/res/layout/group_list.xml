@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_gray"
@@ -41,11 +42,18 @@
             android:textAlignment="textEnd" />
 
         <TextView
-            android:id="@+id/people_count_group"
+            android:id="@+id/day_week_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5 чел."
+            android:layout_marginEnd="16dp"
+            android:text="Пн, Чт" />
+
+        <TextView
+            android:id="@+id/people_count_group"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:text="5 чел."
             android:textAlignment="textEnd" />
 
     </LinearLayout>
@@ -54,5 +62,6 @@
         android:id="@+id/group_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"/>
+        android:layout_marginBottom="3dp"
+        android:visibility="gone" />
 </LinearLayout>

@@ -29,7 +29,7 @@ public class PeopleMentor extends Fragment implements OnUsersListener {
     Main2Activity main;
 
     LinearLayout linearLayout;
-    RVAdapterUsers adapter;
+    RVAdapterUsers2 adapter;
     List<User> users = new ArrayList<User>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,14 +106,14 @@ public class PeopleMentor extends Fragment implements OnUsersListener {
             LinearLayoutManager llm = new LinearLayoutManager(main.getApplicationContext());
             groupList.setLayoutManager(llm);
 
-            adapter = new RVAdapterUsers(main, users_group.get(i));
+            adapter = new RVAdapterUsers2(main, users_group.get(i));
             groupList.setAdapter(adapter);
             linearLayout.addView(v1);
 
             final ImageView group_open = (ImageView)v1.findViewById(R.id.group_open);
             LinearLayout title_group = (LinearLayout)v1.findViewById(R.id.title_group);
             title_group.setOnClickListener(new View.OnClickListener() {
-                boolean visible = true;
+                boolean visible = false;
                 @Override
                 public void onClick(View v) {
                     if (visible) {
@@ -132,10 +132,13 @@ public class PeopleMentor extends Fragment implements OnUsersListener {
             people_count_group.setText(String.valueOf(adapter.getItemCount()) + " чел.");
 
             TextView time_group = (TextView)v1.findViewById(R.id.time_group);
+            TextView day_week_group = (TextView)v1.findViewById(R.id.day_week_group);
             GetTimeGroup getTimeGroup = new GetTimeGroup(group.get(i));
             getTimeGroup.execute();
             try {
-                time_group.setText(getTimeGroup.get());
+                ArrayList<String> time = getTimeGroup.get();
+                time_group.setText(time.get(0));
+                day_week_group.setText(time.get(1));
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
