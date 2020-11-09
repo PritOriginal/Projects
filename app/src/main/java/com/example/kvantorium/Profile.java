@@ -59,14 +59,20 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
         //GetUser task = new GetUser(this, test.USER_ID);
         //task.execute();
         setProfile();
-
-        vk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/prit_1"));
-                startActivity(browserIntent);
-            }
-        });
+        System.out.println(test.user.getVk());
+        if (test.user.getVk() != "") {
+            vk.setText(test.user.getVk());
+            vk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/" + test.user.getVk()));
+                    startActivity(browserIntent);
+                }
+            });
+        }
+        else {
+            vk.setVisibility(View.GONE);
+        }
         recyclerViewProjects = (RecyclerView)view.findViewById(R.id.rv_projects_mini);
         LinearLayoutManager llm2 = new LinearLayoutManager(test.getApplicationContext());
         recyclerViewProjects.setLayoutManager(llm2);

@@ -7,6 +7,7 @@ public class User {
     private int raiting;
     private String role;
     private int group;
+    private String vk;
 
     public User(){
     }
@@ -65,5 +66,12 @@ public class User {
     }
     public void setGroup(int group) {
         this.group = group;
+    }
+
+    public void setVk(String vk) {
+        this.vk = vk;
+    }
+    public String getVk() {
+        return vk;
     }
 }

@@ -50,13 +50,18 @@ public class ProfileMentor extends Fragment implements OnUserListener {
         adapter = new RVAdapterAchievement(main, achievements);
         recyclerView.setAdapter(adapter);
         setProfile();
-        vk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/prit_1"));
-                startActivity(browserIntent);
-            }
-        });
+        if (user.getVk() != "") {
+            vk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/" + user.getVk()));
+                    startActivity(browserIntent);
+                }
+            });
+        }
+        else {
+            vk.setVisibility(View.GONE);
+        }
         return view;
     }
 
