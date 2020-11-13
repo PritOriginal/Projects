@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     public void update() {
         projects = dbHelper.getAllProjectUser(database, USER_ID);
-        adapter = new RVAdapter(this, projects);
+        adapter = new RVAdapter(this, projects, false);
         recyclerView.setAdapter(adapter);
         dbHelper.close();
     }

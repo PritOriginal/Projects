@@ -55,18 +55,6 @@ public class ProfileActivity extends AppCompatActivity implements OnUserListener
         getUser.execute();
         setProfile();
 
-        if (user.getVk() != "") {
-            vk.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/" + user.getVk()));
-                    startActivity(browserIntent);
-                }
-            });
-        }
-        else {
-            vk.setVisibility(View.GONE);
-        }
         recyclerViewProjects = (RecyclerView)findViewById(R.id.rv_projects_mini);
         LinearLayoutManager llm2 = new LinearLayoutManager(this);
         recyclerViewProjects.setLayoutManager(llm2);
@@ -101,6 +89,19 @@ public class ProfileActivity extends AppCompatActivity implements OnUserListener
         user = us;
         user.setRaiting(100);
         name.setText(user.getSecondName() + " " + user.getFirstName());
+        if (user.getVk() != "") {
+            vk.setText(user.getVk());
+            vk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/" + user.getVk()));
+                    startActivity(browserIntent);
+                }
+            });
+        }
+        else {
+            vk.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -111,7 +112,7 @@ public class ProfileActivity extends AppCompatActivity implements OnUserListener
     @Override
     public void onProjectsCompleted(ArrayList<Project> proj) {
         projects = proj;
-        adapter_projects = new RVAdapter(this, projects);
+        adapter_projects = new RVAdapter(this, projects, true);
         recyclerViewProjects.setAdapter(adapter_projects);
 //        progressBar.setVisibility(View.GONE);
         // recyclerView.setVisibility(View.VISIBLE);

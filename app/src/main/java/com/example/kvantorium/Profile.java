@@ -111,7 +111,7 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
     @Override
     public void onProjectsCompleted(ArrayList<Project> proj) {
         projects = proj;
-        adapter_projects = new RVAdapter(test, projects);
+        adapter_projects = new RVAdapter(test, projects, false);
         recyclerViewProjects.setAdapter(adapter_projects);
 //        progressBar.setVisibility(View.GONE);
        // recyclerView.setVisibility(View.VISIBLE);

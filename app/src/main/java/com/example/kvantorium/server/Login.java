@@ -111,11 +111,13 @@ public class Login extends AsyncTask<URL, Integer, ArrayList<String>> {
                 int mentor = JObject.getInt("mentor");
                 String name = JObject.getString("name");
                 String secondname = JObject.getString("secondname");
+                String vk = JObject.getString("vk");
                 request.add(request_);
                 request.add(String.valueOf(id));
                 request.add(String.valueOf(mentor));
                 request.add(name);
                 request.add(secondname);
+                request.add(vk);
             } finally{
                 if (conn != null) {
                     conn.disconnect();

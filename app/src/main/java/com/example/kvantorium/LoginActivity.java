@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements OnRequestLoginLi
             editor.putBoolean("MENTOR", Integer.parseInt(request.get(2)) == 1 ? true : false);
             editor.putString("NAME", request.get(3));
             editor.putString("SECOND_NAME", request.get(4));
+            editor.putString("VK", request.get(5));
             editor.apply();
 
             Intent intent = new Intent(this, Test.class);

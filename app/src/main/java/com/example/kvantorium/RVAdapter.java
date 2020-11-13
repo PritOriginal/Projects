@@ -25,9 +25,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     List<Project> projects;
     ArrayList<Integer> image = new ArrayList<>();
     private Context mContext;
-    RVAdapter(Context mContext, List<Project> projects) {
+    boolean mentor_view;
+    RVAdapter(Context mContext, List<Project> projects, boolean mentor_view) {
         this.projects = projects;
         this.mContext = mContext;
+        this.mentor_view = mentor_view;
 
         image.add(R.drawable.check);
         image.add(R.drawable.ic_projects);
@@ -52,10 +54,18 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         viewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(mContext, ProjectActivity.class);
-                intent.putExtra("id", projects.get(i).getId());
-                mContext.startActivity(intent);
+                if (!mentor_view) {
+                    Intent intent;
+                    intent = new Intent(mContext, ProjectActivity.class);
+                    intent.putExtra("id", projects.get(i).getId());
+                    mContext.startActivity(intent);
+                }
+                else {
+                    Intent intent;
+                    intent = new Intent(mContext, ProjectMentorActivity.class);
+                    intent.putExtra("id", projects.get(i).getId());
+                    mContext.startActivity(intent);
+                }
             }
         });
         viewHolder.setting.setOnClickListener(new View.OnClickListener() {

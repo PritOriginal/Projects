@@ -113,6 +113,7 @@ public class Test extends AppCompatActivity
             editor.putBoolean("MENTOR", false);
             editor.putString("NAME", "");
             editor.putString("SECOND_NAME", "");
+            editor.putString("VK", "");
             editor.apply();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -223,12 +224,15 @@ public class Test extends AppCompatActivity
                     Intent intent = new Intent(this, Main2Activity.class);
                     startActivity(intent);
                 }
-                if ((mSettings.contains("NAME") && mSettings.getString("NAME", "") == "") && (mSettings.contains("SECOND_NAME") && mSettings.getString("SECOND_NAME", "") == "")) {
+                if ((mSettings.contains("NAME") && mSettings.getString("NAME", "") == "")
+                        && (mSettings.contains("SECOND_NAME") && mSettings.getString("SECOND_NAME", "") == "")
+                        && (mSettings.contains("VK") && mSettings.getString("VK", "") == "")) {
                     GetUser task = new GetUser(this, USER_ID);
                     task.execute();
                 } else {
                     user.setFirstName(mSettings.getString("NAME", ""));
                     user.setSecondName(mSettings.getString("SECOND_NAME", ""));
+                    user.setVk(mSettings.getString("VK", ""));
                     System.out.println("USER: " + user.getSecondName() + " " + user.getFirstName());
                     View header = navigationView.getHeaderView(0);
                     title_name = (TextView)header.findViewById(R.id.title_name);
