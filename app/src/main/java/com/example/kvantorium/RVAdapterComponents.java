@@ -26,8 +26,9 @@ class RVAdapterComponents extends RecyclerView.Adapter<RVAdapterComponents.ViewH
     SQLiteDatabase database;
     ArrayList<Integer> image = new ArrayList<>();
     private Context mContext;
+    boolean project;
     int idProject;
-    RVAdapterComponents(Context mContext, List<Component> components) {
+    RVAdapterComponents(Context mContext, List<Component> components, boolean project) {
         this.components = components;
         Collections.sort(this.components, new Comparator<Component>() {
 
@@ -37,6 +38,7 @@ class RVAdapterComponents extends RecyclerView.Adapter<RVAdapterComponents.ViewH
             }
         });
         this.mContext = mContext;
+        this.project = project;
 
         //<<<<<=================== Типо картинки
         /*
@@ -73,7 +75,7 @@ class RVAdapterComponents extends RecyclerView.Adapter<RVAdapterComponents.ViewH
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ComponentsInfo.class);
                 intent.putExtra("id", components.get(i).getId());
-                intent.putExtra("project", false);
+                intent.putExtra("project", project);
                 mContext.startActivity(intent);
             }
         });

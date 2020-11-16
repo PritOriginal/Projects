@@ -94,17 +94,7 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
 
     public void ButtonAdd(View view) {
         System.out.println("page: " + tabLayout.getSelectedTabPosition());
-        switch (tabLayout.getSelectedTabPosition()) {
-            case 0:
-                AddComponents();
-                break;
-            case 1:
-                AddObjective();
-                break;
-            case 2:
-                AddTeammate();
-                break;
-        }
+        //dialogFragment = new ;
     }
 
     public void AddComponents() {

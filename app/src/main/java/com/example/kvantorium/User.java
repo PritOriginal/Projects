@@ -27,6 +27,14 @@ public class User {
         this.group = group;
     }
 
+    public User(int id, String firstName, String secondName, String role, String vk) {
+        this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.role = role;
+        this.vk = vk;
+    }
+
     public int getId() {
         return id;
     }

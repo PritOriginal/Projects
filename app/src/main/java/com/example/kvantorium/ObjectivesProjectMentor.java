@@ -42,7 +42,7 @@ public class ObjectivesProjectMentor extends Fragment implements OnObjectiveList
     }
 
     public void setObjectives() {
-        adapter = new RVAdapterObjective(context, objectives, this);
+        adapter = new RVAdapterObjective(context, objectives, this, true);
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);

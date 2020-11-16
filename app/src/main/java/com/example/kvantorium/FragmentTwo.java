@@ -278,7 +278,7 @@ public class FragmentTwo extends Fragment implements OnComponentsListener, andro
     }
 
     public void updat(ArrayList<Component> components) {
-        adapter = new RVAdapterComponents(test, allComponent);
+        adapter = new RVAdapterComponents(test, allComponent, false);
         recyclerView.setAdapter(adapter);
     }
 
@@ -316,7 +316,7 @@ public class FragmentTwo extends Fragment implements OnComponentsListener, andro
     public void onComponentsCompleted(ArrayList<Component> components) {
         allComponent = components;
         System.out.println("Components size " + components.size());
-        adapter = new RVAdapterComponents(test, allComponent);
+        adapter = new RVAdapterComponents(test, allComponent, false);
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);

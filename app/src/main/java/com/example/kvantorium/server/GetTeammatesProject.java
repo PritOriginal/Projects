@@ -59,7 +59,7 @@ public class GetTeammatesProject extends AsyncTask<URL, Integer, ArrayList<User>
 
 
         try {
-            String url = "http://192.168.1.69/PythonProject/server_test.py";
+            String url = "http://192.168.1.73/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 
@@ -102,7 +102,8 @@ public class GetTeammatesProject extends AsyncTask<URL, Integer, ArrayList<User>
                     String firstName = jObject.getString("name");
                     String secondName = jObject.getString("secondname");
                     String role = jObject.getString("role");
-                    User user = new User(id, firstName, secondName, role);
+                    String vk = jObject.getString("vk");
+                    User user = new User(id, firstName, secondName, role, vk);
                     users.add(user);
                 }
             } finally{

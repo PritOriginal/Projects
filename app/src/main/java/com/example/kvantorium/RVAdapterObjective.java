@@ -32,10 +32,12 @@ public class RVAdapterObjective extends RecyclerView.Adapter<RVAdapterObjective.
     List<Objective> objectives;
     private Context mContext;
     OnObjectiveListener mListener;
-    RVAdapterObjective (Context mContext, List<Objective> objectives, OnObjectiveListener mListener){
+    boolean mentor;
+    RVAdapterObjective (Context mContext, List<Objective> objectives, OnObjectiveListener mListener, boolean mentor){
         this.mContext = mContext;
         this.objectives = objectives;
         this.mListener = mListener;
+        this.mentor = mentor;
     }
 
     @Override
@@ -53,54 +55,60 @@ public class RVAdapterObjective extends RecyclerView.Adapter<RVAdapterObjective.
         if (viewHolder.checkObjective.isChecked()) {
             viewHolder.objective.setTextColor(mContext.getResources().getColor(R.color.text_checked, null));
         }
-        viewHolder.checkObjective.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SetCheckObjective setCheckObjective;
-                if (viewHolder.checkObjective.isChecked()) {
-                    viewHolder.objective.setTextColor(mContext.getResources().getColor(R.color.text_checked, null));
-                    setCheckObjective = new SetCheckObjective(objectives.get(i).getId(), 1);
-                } else {
-                    viewHolder.objective.setTextColor(mContext.getResources().getColor(R.color.text_unchecked, null));
-                    setCheckObjective = new SetCheckObjective(objectives.get(i).getId(), 0);
+        if (!mentor) {
+            viewHolder.checkObjective.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @RequiresApi(api = Build.VERSION_CODES.M)
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    SetCheckObjective setCheckObjective;
+                    if (viewHolder.checkObjective.isChecked()) {
+                        viewHolder.objective.setTextColor(mContext.getResources().getColor(R.color.text_checked, null));
+                        setCheckObjective = new SetCheckObjective(objectives.get(i).getId(), 1);
+                    } else {
+                        viewHolder.objective.setTextColor(mContext.getResources().getColor(R.color.text_unchecked, null));
+                        setCheckObjective = new SetCheckObjective(objectives.get(i).getId(), 0);
+                    }
+                    setCheckObjective.execute();
                 }
-                setCheckObjective.execute();
-            }
-        });
-        viewHolder.cv.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                PopupMenu popup = new PopupMenu(mContext, v);
-                MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.objective_menu, popup.getMenu());
-                popup.show();
+            });
+            viewHolder.cv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    PopupMenu popup = new PopupMenu(mContext, v);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.objective_menu, popup.getMenu());
+                    popup.show();
 
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.action_edit_objective:
-                                DialogFragment dialogFragment = new ChangeObjectiveFragment(mListener, i, objectives.get(i));
-                                FragmentManager fragmentManager =  ((FragmentActivity) mContext).getSupportFragmentManager();
-                                dialogFragment.show(fragmentManager, TAG);
-                                return true;
-                            case R.id.action_delete_objective:
-                                // Тут короче мне тоже пока лень делать диалог, поэтому пока что чисто так
-                                DeleteObjective deleteObjective = new DeleteObjective(objectives.get(i).getId());
-                                deleteObjective.execute();
-                                objectives.remove(i);
-                                notifyDataSetChanged();
-                                return true;
-                            default:
-                                return false;
-                    }
-                    }
-                });
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.action_edit_objective:
+                                    DialogFragment dialogFragment = new ChangeObjectiveFragment(mListener, i, objectives.get(i));
+                                    FragmentManager fragmentManager = ((FragmentActivity) mContext).getSupportFragmentManager();
+                                    dialogFragment.show(fragmentManager, TAG);
+                                    return true;
+                                case R.id.action_delete_objective:
+                                    // Тут короче мне тоже пока лень делать диалог, поэтому пока что чисто так
+                                    DeleteObjective deleteObjective = new DeleteObjective(objectives.get(i).getId());
+                                    deleteObjective.execute();
+                                    objectives.remove(i);
+                                    notifyDataSetChanged();
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
 
-                return true;
-            }
-        });;
+                    return true;
+                }
+            });
+            ;
+        } else {
+            viewHolder.cv.setClickable(false);
+            viewHolder.checkObjective.setClickable(false);
+        }
     }
 
     @Override

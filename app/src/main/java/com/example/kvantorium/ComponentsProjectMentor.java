@@ -38,7 +38,7 @@ public class ComponentsProjectMentor extends Fragment implements OnComponentsLis
     }
     public void setComponents() {
         //components = dbHelper.getComponentsProject(database, id);
-        adapter = new RVAdapterComponents(context, components);
+        adapter = new RVAdapterComponents(context, components, true);
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
