@@ -1,10 +1,15 @@
 package com.example.kvantorium;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,10 +22,14 @@ import android.widget.TextView;
 import com.example.kvantorium.R;
 import com.example.kvantorium.server.DeleteProject;
 import com.example.kvantorium.server.GetProject;
+import com.example.kvantorium.server.SetCompleteProject;
 
-public class ProjectMentorActivity extends AppCompatActivity implements OnProjectListener {
+import static android.support.constraint.Constraints.TAG;
+
+public class ProjectMentorActivity extends AppCompatActivity implements OnProjectListener, OnConfirmListener {
     TextView name;
     TextView description;
+    FloatingActionButton complete;
     public int USER_ID;
     DBHelper dbHelper;
     SQLiteDatabase database;
@@ -78,6 +87,7 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
 
         name = (TextView) findViewById(R.id.title_nameProject);
         description = (TextView) findViewById(R.id.title_descriptionProject);
+        complete = (FloatingActionButton) findViewById(R.id.complete_project);
         dbHelper = new DBHelper(this);
         database = dbHelper.getWritableDatabase();
         USER_ID = getIntent().getExtras().getInt("idUser");
@@ -87,14 +97,19 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
     }
 
     public void setProject() {
-        //    Project p = dbHelper.getProject(database, id);
         name.setText(project.getName());
         description.setText(project.getDescription());
+        if (project.isCompleted()){
+            int drawable = getResources().getIdentifier("ic_baseline_check_24", "drawable", getPackageName());
+            complete.setImageResource(drawable);
+            complete.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.table_1_item_characteristics)));
+        }
     }
 
     public void ButtonAdd(View view) {
         System.out.println("page: " + tabLayout.getSelectedTabPosition());
-        //dialogFragment = new ;
+        dialogFragment = new ConfirmFragment(this, project.isCompleted() == false ? 0 : 1);
+        dialogFragment.show(getSupportFragmentManager(), TAG);
     }
 
     public void AddComponents() {
@@ -169,6 +184,29 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
 
     @Override
     public void onProjectError(String error) {
+
+    }
+
+    @Override
+    public void OnConfirmPositive() {
+        if (!project.isCompleted()) {
+            int drawable = getResources().getIdentifier("ic_baseline_check_24", "drawable", getPackageName());
+            complete.setImageResource(drawable);
+            complete.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.table_1_item_characteristics)));
+        }
+        else {
+            int drawable = getResources().getIdentifier("ic_baseline_check_24", "drawable", getPackageName());
+            complete.setImageResource(drawable);
+            complete.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.floatingButton)));
+        }
+        boolean compl = project.isCompleted();
+        SetCompleteProject setCompleteProject = new SetCompleteProject(id, project.isCompleted() == true ? 0 : 1);
+        setCompleteProject.execute();
+        project.setCompleted(compl);
+    }
+
+    @Override
+    public void OnConfirmNegative() {
 
     }
 }

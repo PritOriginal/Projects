@@ -13,7 +13,7 @@ import android.widget.EditText;
 import com.example.kvantorium.server.AddObjective;
 
 @SuppressLint("ValidFragment")
-public class AddObjectiveFragment extends DialogFragment  implements DialogInterface.OnClickListener {
+public class AddObjectiveFragment extends DialogFragment implements DialogInterface.OnClickListener {
 
     OnObjectiveListener mListener;
 

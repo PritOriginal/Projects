@@ -2,11 +2,6 @@ package com.example.kvantorium.server;
 
 import android.os.AsyncTask;
 
-import com.example.kvantorium.OnProjectListener;
-import com.example.kvantorium.OnUserListener;
-import com.example.kvantorium.Project;
-import com.example.kvantorium.User;
-
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -18,23 +13,25 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GetProject extends AsyncTask<URL, Integer, Project> {
-    private OnProjectListener mListener;
-    Project project = new Project();
-    int id;
+public class SetCompleteProject extends AsyncTask<URL, Integer, ArrayList<String>> {
+    ArrayList<String> request = new ArrayList<String>();
+    Integer id;
+    Integer complete;
 
-    public GetProject (OnProjectListener mListener, int id) {
-        this.mListener = mListener;
+    public SetCompleteProject(int id, Integer complete){
         this.id = id;
+        this.complete = complete;
     }
 
     @Override
-    protected Project doInBackground(URL... urls) {
+    protected ArrayList<String> doInBackground(URL... urls) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("REQUEST", "getProject");
+        params.put("REQUEST", "setCompleteProject");
         params.put("ID", String.valueOf(id));
+        params.put("CHECKED", String.valueOf(complete));
 
         StringBuilder sbParams = new StringBuilder();
         int i = 0;
@@ -60,6 +57,7 @@ public class GetProject extends AsyncTask<URL, Integer, Project> {
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 
             try {
+                System.out.println(sbParams.toString());
                 byte[]postDataBytes = sbParams.toString().getBytes("UTF-8");
                 //conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestProperty("Accept", "application/text");
@@ -99,12 +97,8 @@ public class GetProject extends AsyncTask<URL, Integer, Project> {
                 System.out.println("From server: " + result);
 
                 JSONObject JObject = new JSONObject(result);
-                String name = JObject.getString("name");
-                String description = JObject.getString("description");
-                int id = JObject.getInt("id");
-                boolean completed = JObject.getInt("completed") == 1 ? true : false;
-                project = new Project(id, name, description, completed);
-                //  user.setRaiting(32);
+                String req = JObject.getString("request");
+                System.out.println("From server: " + req);
 
             } finally{
                 if (conn != null) {
@@ -114,13 +108,6 @@ public class GetProject extends AsyncTask<URL, Integer, Project> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return project;
-    }
-    @Override
-    protected void onPostExecute(Project project) {
-        //do stuff
-        if (mListener != null) {
-            mListener.onProjectCompleted(project);
-        }
+        return request;
     }
 }
