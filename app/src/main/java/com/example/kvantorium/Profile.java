@@ -122,4 +122,9 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
         //noneProject.setVisibility(View.VISIBLE);
 //        progressBar.setVisibility(View.GONE);
     }
+
+    @Override
+    public void onProjectCheck(Project proj, int i) {
+
+    }
 }

@@ -3,6 +3,7 @@ package com.example.kvantorium;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,8 @@ public class ProfileActivity extends AppCompatActivity implements OnUserListener
     RVAdapter adapter_projects;
     List<Integer> achievements = new ArrayList<Integer>();
     List<Project> projects = new ArrayList<Project>();
+    Project checkProject = new Project();
+    int indexCheckProject;
     User user = new User();
     public int USER_ID;
     @Override
@@ -85,6 +88,27 @@ public class ProfileActivity extends AppCompatActivity implements OnUserListener
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {return;}
+        Boolean delete = data.getBooleanExtra("delete", false);
+        if (!delete) {
+            String name = data.getStringExtra("name");
+            String description = data.getStringExtra("description");
+            Boolean completed = data.getBooleanExtra("completed", false);
+            checkProject.setName(name);
+            checkProject.setDescription(description);
+            checkProject.setCompleted(completed);
+            projects.set(indexCheckProject, checkProject);
+            adapter_projects.setProjects(projects);
+            //System.out.println("Проект" + name + ";" + description + ";" + completed);
+        }
+        else {
+            projects.remove(indexCheckProject);
+            adapter_projects.setProjects(projects);
+        }
+    }
+
+    @Override
     public void onUserCompleted(User us) {
         user = us;
         user.setRaiting(100);
@@ -112,7 +136,7 @@ public class ProfileActivity extends AppCompatActivity implements OnUserListener
     @Override
     public void onProjectsCompleted(ArrayList<Project> proj) {
         projects = proj;
-        adapter_projects = new RVAdapter(this, projects, true);
+        adapter_projects = new RVAdapter(this, projects, true, USER_ID, this);
         recyclerViewProjects.setAdapter(adapter_projects);
 //        progressBar.setVisibility(View.GONE);
         // recyclerView.setVisibility(View.VISIBLE);
@@ -123,4 +147,16 @@ public class ProfileActivity extends AppCompatActivity implements OnUserListener
         //noneProject.setVisibility(View.VISIBLE);
 //        progressBar.setVisibility(View.GONE);
     }
+
+    @Override
+    public void onProjectCheck(Project proj, int i) {
+        checkProject = proj;
+        indexCheckProject = i;
+        Intent intent = new Intent(this, ProjectMentorActivity.class);
+        intent.putExtra("id", checkProject.getId());
+        intent.putExtra("idUser", USER_ID);
+        startActivityForResult(intent, 1);
+    }
+
+
 }

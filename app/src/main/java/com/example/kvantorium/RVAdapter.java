@@ -3,7 +3,11 @@ package com.example.kvantorium;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -20,17 +24,32 @@ import com.example.kvantorium.server.DeleteProject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
+import static android.support.constraint.Constraints.TAG;
+
+public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> implements OnConfirmListener {
     @NonNull
     List<Project> projects;
     ArrayList<Integer> image = new ArrayList<>();
     private Context mContext;
     boolean mentor_view;
+    public int USER_ID;
+    OnProjectsListener mListener;
+    OnConfirmListener confirmListener = this;
+    int index;
     RVAdapter(Context mContext, List<Project> projects, boolean mentor_view) {
         this.projects = projects;
         this.mContext = mContext;
         this.mentor_view = mentor_view;
 
+        image.add(R.drawable.check);
+        image.add(R.drawable.ic_projects);
+    }
+    RVAdapter(Context mContext, List<Project> projects, boolean mentor_view, int USER_ID, OnProjectsListener mListener) {
+        this.projects = projects;
+        this.mContext = mContext;
+        this.mentor_view = mentor_view;
+        this.USER_ID = USER_ID;
+        this.mListener = mListener;
         image.add(R.drawable.check);
         image.add(R.drawable.ic_projects);
     }
@@ -62,9 +81,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 }
                 else {
                     Intent intent;
-                    intent = new Intent(mContext, ProjectMentorActivity.class);
-                    intent.putExtra("id", projects.get(i).getId());
-                    mContext.startActivity(intent);
+                    mListener.onProjectCheck(projects.get(i), i);
                 }
             }
         });
@@ -86,8 +103,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                                 mContext.startActivity(intent);
                                 return true;
                             case R.id.action_delete_project:
-                                DeleteProject deleteProject = new DeleteProject(projects.get(i).getId());
-                                deleteProject.execute();
+                                index = i;
+                                DialogFragment dialogFragment = new ConfirmFragment(confirmListener, 2);
+                                FragmentManager fragmentManager =  ((FragmentActivity) mContext).getSupportFragmentManager();
+                                dialogFragment.show(fragmentManager, TAG);
                                 return true;
                             default:
                                 return false;
@@ -101,6 +120,24 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return projects.size();
+    }
+
+    @Override
+    public void OnConfirmPositive() {
+
+    }
+
+    @Override
+    public void OnConfirmNegative() {
+
+    }
+
+    @Override
+    public void OnConfirmDelete() {
+        DeleteProject deleteProject = new DeleteProject(projects.get(index).getId());
+        deleteProject.execute();
+        projects.remove(index);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -122,5 +159,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public void setProjects(List<Project> projects){
+        this.projects = projects;
+        notifyDataSetChanged();
     }
 }

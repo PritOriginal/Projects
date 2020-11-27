@@ -34,6 +34,12 @@ public class ConfirmFragment extends DialogFragment implements DialogInterface.O
                         .setPositiveButton("Да", this)
                         .setNegativeButton("Нет", this);
                 break;
+            case 2:
+                builder.setTitle("Подтверждение")
+                        .setMessage("Вы уверены, что хотите удалить проект?")
+                        .setPositiveButton("Да", this)
+                        .setNegativeButton("Нет", this);
+                break;
         }
         return builder.create();
     }
@@ -42,7 +48,12 @@ public class ConfirmFragment extends DialogFragment implements DialogInterface.O
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
             case Dialog.BUTTON_POSITIVE:
-                mListener.OnConfirmPositive();
+                if (message != 2) {
+                    mListener.OnConfirmPositive();
+                }
+                else {
+                    mListener.OnConfirmDelete();
+                }
                 break;
             case Dialog.BUTTON_NEGATIVE:
 

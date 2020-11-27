@@ -148,9 +148,11 @@ public class EditProject extends AppCompatActivity implements OnProjectListener 
         String description = descriptionProject.getText().toString();
         ChangeProject task = new ChangeProject(id, name, description);
         task.execute();
-        Intent intent = new Intent(EditProject.this, ProjectActivity.class);
-        intent.putExtra("id", id);
-        startActivity(intent);
+        Intent intent = new Intent();
+        intent.putExtra("name", name);
+        intent.putExtra("description", description);
+        setResult(RESULT_OK, intent);
+        this.finish();
     }
 
     @Override
@@ -158,6 +160,7 @@ public class EditProject extends AppCompatActivity implements OnProjectListener 
         project = proj;
         setProject();
     }
+
 
     @Override
     public void onProjectError(String error) {

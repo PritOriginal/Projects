@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.example.kvantorium.server.DeleteProject;
 import com.example.kvantorium.server.GetProject;
 
-public class ProjectActivity extends AppCompatActivity implements OnProjectListener {
+public class ProjectActivity extends AppCompatActivity implements OnProjectListener, OnConfirmListener {
     TextView name;
     TextView description;
     public int USER_ID;
@@ -148,32 +148,37 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectListe
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
             case R.id.action_edit:
-
                 Intent intent = new Intent(this, EditProject.class);
                 intent.putExtra("id", id);
-                startActivity(intent);
+                startActivityForResult(intent, 2);
                 return true;
             case R.id.action_delete_project:
-               // database.delete(dbHelper.TABLE_NAME, "id =" + id, null);
-               // dbHelper.close();
-
-                // Типо вызов диалога для подтверждения, но мне пока лень, поэтому чисто так
-                DeleteProject deleteProject = new DeleteProject(id);
-                deleteProject.execute();
-
-                Intent intent1 = new Intent(this, Test.class);
-                intent1.putExtra("item", 1);
-                startActivity(intent1);
+                dialogFragment = new ConfirmFragment(this, 2);
+                dialogFragment.show(getSupportFragmentManager(), TAG);
                 return true;
             case android.R.id.home:
-                //this.finish();
-                Intent intent2 = new Intent(this, Test.class);
-                intent2.putExtra("item", 1);
-                startActivity(intent2);
+
+                Intent intent2 = new Intent();
+                intent2.putExtra("name", project.getName());
+                intent2.putExtra("description", project.getDescription());
+                intent2.putExtra("completed", project.isCompleted());
+                setResult(RESULT_OK, intent2);
+                this.finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {return;}
+        String name_ = data.getStringExtra("name");
+        String description_ = data.getStringExtra("description");
+        name.setText(name_);
+        description.setText(description_);
+        project.setName(name_);
+        project.setDescription(description_);
     }
 
     @Override
@@ -185,6 +190,27 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectListe
     @Override
     public void onProjectError(String error) {
 
+    }
+
+    @Override
+    public void OnConfirmPositive() {
+
+    }
+
+    @Override
+    public void OnConfirmNegative() {
+
+    }
+
+    @Override
+    public void OnConfirmDelete() {
+        DeleteProject deleteProject = new DeleteProject(id);
+        deleteProject.execute();
+        //
+        Intent intent1 = new Intent();
+        intent1.putExtra("delete", true);
+        setResult(RESULT_OK, intent1);
+        this.finish();
     }
 /*
     @Override

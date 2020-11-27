@@ -34,6 +34,8 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
     ImageView noneProject;
     RVAdapter adapter;
     List<Project> projects = new ArrayList<Project>();
+    Project checkProject = new Project();
+    int indexCheckProject;
     public int USER_ID = 0;
     private int countID;
 
@@ -110,6 +112,27 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {return;}
+        Boolean delete = data.getBooleanExtra("delete", false);
+        if (!delete) {
+            String name = data.getStringExtra("name");
+            String description = data.getStringExtra("description");
+            Boolean completed = data.getBooleanExtra("completed", false);
+            checkProject.setName(name);
+            checkProject.setDescription(description);
+            checkProject.setCompleted(completed);
+            projects.set(indexCheckProject, checkProject);
+            adapter.setProjects(projects);
+            //System.out.println("Проект" + name + ";" + description + ";" + completed);
+        }
+        else {
+            projects.remove(indexCheckProject);
+            adapter.setProjects(projects);
+        }
+    }
+
+    @Override
     public void onProjectsCompleted(ArrayList<Project> proj) {
         projects = proj;
         adapter = new RVAdapter(test, projects, false);
@@ -122,5 +145,15 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
     public void onProjectsError(String error) {
         noneProject.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onProjectCheck(Project proj, int i) {
+        checkProject = proj;
+        indexCheckProject = i;
+        Intent intent = new Intent(test, ProjectActivity.class);
+        intent.putExtra("id", checkProject.getId());
+        intent.putExtra("idUser", USER_ID);
+        startActivityForResult(intent, 1);
     }
 }

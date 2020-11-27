@@ -24,6 +24,8 @@ import com.example.kvantorium.server.DeleteProject;
 import com.example.kvantorium.server.GetProject;
 import com.example.kvantorium.server.SetCompleteProject;
 
+import java.util.List;
+
 import static android.support.constraint.Constraints.TAG;
 
 public class ProjectMentorActivity extends AppCompatActivity implements OnProjectListener, OnConfirmListener {
@@ -88,8 +90,6 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
         name = (TextView) findViewById(R.id.title_nameProject);
         description = (TextView) findViewById(R.id.title_descriptionProject);
         complete = (FloatingActionButton) findViewById(R.id.complete_project);
-        dbHelper = new DBHelper(this);
-        database = dbHelper.getWritableDatabase();
         USER_ID = getIntent().getExtras().getInt("idUser");
 
         GetProject task = new GetProject(this, id);
@@ -111,31 +111,6 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
         dialogFragment = new ConfirmFragment(this, project.isCompleted() == false ? 0 : 1);
         dialogFragment.show(getSupportFragmentManager(), TAG);
     }
-
-    public void AddComponents() {
-        Intent intent2 = new Intent(this, AddComponent.class);
-        intent2.putExtra("id", id);
-        startActivity(intent2);
-    }
-    public void AddObjective() {
-        dialogFragment = new AddObjectiveFragment(ObjectiveListener);
-        dialogFragment.show(getSupportFragmentManager(), TAG);
-    }
-    public void AddTeammate() {
-        dialogFragment = new AddTeammateFragment();
-        dialogFragment.show(getSupportFragmentManager(), TAG);
-    }
-    /*
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -160,15 +135,18 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
                 startActivity(intent);
                 return true;
             case R.id.action_delete_project:
-                // Типо вызов диалога для подтверждения, но мне пока лень, поэтому чисто так
-                DeleteProject deleteProject = new DeleteProject(id);
-                deleteProject.execute();
-
-                Intent intent1 = new Intent(this, Test.class);
-                intent1.putExtra("item", 1);
-                startActivity(intent1);
+                dialogFragment = new ConfirmFragment(this, 2);
+                dialogFragment.show(getSupportFragmentManager(), TAG);
                 return true;
             case android.R.id.home:
+              //  Intent intent2 = new Intent(this, ProfileActivity.class);
+              //  intent2.putExtra("id", USER_ID);
+             //   startActivity(intent2);
+                Intent intent2 = new Intent();
+                intent2.putExtra("name", project.getName());
+                intent2.putExtra("description", project.getDescription());
+                intent2.putExtra("completed", project.isCompleted());
+                setResult(RESULT_OK, intent2);
                 this.finish();
                 return true;
             default:
@@ -177,10 +155,21 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent2 = new Intent();
+        intent2.putExtra("name", project.getName());
+        intent2.putExtra("description", project.getDescription());
+        intent2.putExtra("completed", project.isCompleted());
+        setResult(RESULT_OK, intent2);
+        this.finish();
+    }
+
+    @Override
     public void onProjectCompleted(Project proj) {
         project = proj;
         setProject();
     }
+
 
     @Override
     public void onProjectError(String error) {
@@ -189,24 +178,37 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
 
     @Override
     public void OnConfirmPositive() {
+        boolean compl = project.isCompleted();
         if (!project.isCompleted()) {
             int drawable = getResources().getIdentifier("ic_baseline_check_24", "drawable", getPackageName());
             complete.setImageResource(drawable);
             complete.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.table_1_item_characteristics)));
+            SetCompleteProject setCompleteProject = new SetCompleteProject(id, 1);
+            setCompleteProject.execute();
         }
         else {
             int drawable = getResources().getIdentifier("ic_baseline_check_24", "drawable", getPackageName());
             complete.setImageResource(drawable);
             complete.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.floatingButton)));
+            SetCompleteProject setCompleteProject = new SetCompleteProject(id, 0);
+            setCompleteProject.execute();
         }
-        boolean compl = project.isCompleted();
-        SetCompleteProject setCompleteProject = new SetCompleteProject(id, project.isCompleted() == true ? 0 : 1);
-        setCompleteProject.execute();
-        project.setCompleted(compl);
+        project.setCompleted(!compl);
     }
 
     @Override
     public void OnConfirmNegative() {
 
+    }
+
+    @Override
+    public void OnConfirmDelete() {
+        DeleteProject deleteProject = new DeleteProject(id);
+        deleteProject.execute();
+        //
+        Intent intent1 = new Intent();
+        intent1.putExtra("delete", true);
+        setResult(RESULT_OK, intent1);
+        this.finish();
     }
 }
