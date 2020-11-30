@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class PageAdapter extends FragmentPagerAdapter {
 
     ProjectActivity projectActivity;
+    ComponentsProject componentsProject;
     private int numOfTabs;
 
     public PageAdapter(FragmentManager fm, int numOfTabs, ProjectActivity projectActivity) {
@@ -19,7 +20,8 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new ComponentsProject();
+                componentsProject = new ComponentsProject();
+                return componentsProject;
             case 1:
                 ObjectivesProject objectivesProject = new ObjectivesProject();
                 projectActivity.ObjectiveListener = objectivesProject.getCreateListener();
@@ -34,5 +36,9 @@ public class PageAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return numOfTabs;
+    }
+
+    public void updateComponents() {
+        componentsProject.update();
     }
 }

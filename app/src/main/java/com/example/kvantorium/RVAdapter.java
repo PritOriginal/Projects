@@ -32,7 +32,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> implem
     ArrayList<Integer> image = new ArrayList<>();
     private Context mContext;
     boolean mentor_view;
-    public int USER_ID;
     OnProjectsListener mListener;
     OnConfirmListener confirmListener = this;
     int index;
@@ -44,11 +43,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> implem
         image.add(R.drawable.check);
         image.add(R.drawable.ic_projects);
     }
-    RVAdapter(Context mContext, List<Project> projects, boolean mentor_view, int USER_ID, OnProjectsListener mListener) {
+    RVAdapter(Context mContext, List<Project> projects, boolean mentor_view, OnProjectsListener mListener) {
         this.projects = projects;
         this.mContext = mContext;
         this.mentor_view = mentor_view;
-        this.USER_ID = USER_ID;
         this.mListener = mListener;
         image.add(R.drawable.check);
         image.add(R.drawable.ic_projects);
@@ -73,16 +71,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> implem
         viewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mentor_view) {
-                    Intent intent;
-                    intent = new Intent(mContext, ProjectActivity.class);
-                    intent.putExtra("id", projects.get(i).getId());
-                    mContext.startActivity(intent);
-                }
-                else {
-                    Intent intent;
-                    mListener.onProjectCheck(projects.get(i), i);
-                }
+                mListener.onProjectCheck(projects.get(i), i);
             }
         });
         viewHolder.setting.setOnClickListener(new View.OnClickListener() {

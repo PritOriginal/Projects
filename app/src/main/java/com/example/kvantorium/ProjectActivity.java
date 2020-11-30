@@ -109,7 +109,7 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectListe
     public void AddComponents() {
         Intent intent2 = new Intent(this, AddComponent.class);
         intent2.putExtra("id", id);
-        startActivity(intent2);
+        startActivityForResult(intent2, 3);
     }
     public void AddObjective() {
         dialogFragment = new AddObjectiveFragment(ObjectiveListener);
@@ -171,14 +171,40 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectListe
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent2 = new Intent();
+        intent2.putExtra("name", project.getName());
+        intent2.putExtra("description", project.getDescription());
+        intent2.putExtra("completed", project.isCompleted());
+        setResult(RESULT_OK, intent2);
+        this.finish();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) {return;}
-        String name_ = data.getStringExtra("name");
-        String description_ = data.getStringExtra("description");
-        name.setText(name_);
-        description.setText(description_);
-        project.setName(name_);
-        project.setDescription(description_);
+        switch (requestCode) {
+            case 2:
+                if (resultCode == RESULT_OK) {
+                    String name_ = data.getStringExtra("name");
+                    String description_ = data.getStringExtra("description");
+                    name.setText(name_);
+                    description.setText(description_);
+                    project.setName(name_);
+                    project.setDescription(description_);
+                }
+                break;
+            case 3:
+                if (resultCode == RESULT_OK) {
+                    pageAdapter.updateComponents();
+                }
+                break;
+
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
+
     }
 
     @Override

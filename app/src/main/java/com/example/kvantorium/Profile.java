@@ -34,6 +34,8 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
     List<Integer> achievements = new ArrayList<Integer>();
     List<Project> projects = new ArrayList<Project>();
     User user = new User();
+    Project checkProject = new Project();
+    int indexCheckProject;
 
     public Profile() {
     }
@@ -90,6 +92,27 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {return;}
+        Boolean delete = data.getBooleanExtra("delete", false);
+        if (!delete) {
+            String name = data.getStringExtra("name");
+            String description = data.getStringExtra("description");
+            Boolean completed = data.getBooleanExtra("completed", false);
+            checkProject.setName(name);
+            checkProject.setDescription(description);
+            checkProject.setCompleted(completed);
+            projects.set(indexCheckProject, checkProject);
+            adapter_projects.setProjects(projects);
+            //System.out.println("Проект" + name + ";" + description + ";" + completed);
+        }
+        else {
+            projects.remove(indexCheckProject);
+            adapter_projects.setProjects(projects);
+        }
+    }
+
     public void setProfile(){
         name.setText(test.user.getSecondName() + " " + test.user.getFirstName());
     }
@@ -111,7 +134,7 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
     @Override
     public void onProjectsCompleted(ArrayList<Project> proj) {
         projects = proj;
-        adapter_projects = new RVAdapter(test, projects, false);
+        adapter_projects = new RVAdapter(test, projects, false, this);
         recyclerViewProjects.setAdapter(adapter_projects);
 //        progressBar.setVisibility(View.GONE);
        // recyclerView.setVisibility(View.VISIBLE);
@@ -125,6 +148,11 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
 
     @Override
     public void onProjectCheck(Project proj, int i) {
-
+        checkProject = proj;
+        indexCheckProject = i;
+        Intent intent = new Intent(test, ProjectActivity.class);
+        intent.putExtra("id", checkProject.getId());
+        intent.putExtra("idUser", test.USER_ID);
+        startActivityForResult(intent, 1);
     }
 }

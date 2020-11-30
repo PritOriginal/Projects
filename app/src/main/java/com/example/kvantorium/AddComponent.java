@@ -111,9 +111,9 @@ public class AddComponent extends AppCompatActivity implements View.OnClickListe
                 }
                 AddComponentProject task = new AddComponentProject(id, idComponent, countComponent);
                 task.execute();
-                Intent intent = new Intent(this, ProjectActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                this.finish();
                 /*
                 int i = 0;
                 while (i < allComponent.size()) {

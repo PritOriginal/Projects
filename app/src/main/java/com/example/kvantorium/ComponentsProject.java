@@ -43,6 +43,10 @@ public class ComponentsProject extends Fragment implements OnComponentsListener{
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
     }
+    public void update() {
+        GetComponentsProject getComponentsProject = new GetComponentsProject(this, context.id, progressBar);
+        getComponentsProject.execute();
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

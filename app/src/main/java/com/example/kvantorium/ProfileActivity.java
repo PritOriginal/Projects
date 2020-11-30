@@ -136,7 +136,7 @@ public class ProfileActivity extends AppCompatActivity implements OnUserListener
     @Override
     public void onProjectsCompleted(ArrayList<Project> proj) {
         projects = proj;
-        adapter_projects = new RVAdapter(this, projects, true, USER_ID, this);
+        adapter_projects = new RVAdapter(this, projects,true,this);
         recyclerViewProjects.setAdapter(adapter_projects);
 //        progressBar.setVisibility(View.GONE);
         // recyclerView.setVisibility(View.VISIBLE);

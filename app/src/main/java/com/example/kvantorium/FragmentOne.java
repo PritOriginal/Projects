@@ -76,7 +76,7 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
     }
     public void update() {
         projects = dbHelper.getAllProjectUser(database, USER_ID);
-        adapter = new RVAdapter(test, projects, false);
+        adapter = new RVAdapter(test, projects, false, this);
         recyclerView.setAdapter(adapter);
         dbHelper.close();
     }
@@ -135,7 +135,7 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
     @Override
     public void onProjectsCompleted(ArrayList<Project> proj) {
         projects = proj;
-        adapter = new RVAdapter(test, projects, false);
+        adapter = new RVAdapter(test, projects, false, this);
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
