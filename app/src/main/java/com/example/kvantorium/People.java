@@ -28,7 +28,7 @@ public class People extends Fragment implements OnMentorsListener {
     List<User> mentors = new ArrayList<User>();
 
     boolean mentorsVisible = true;
-    Test test;
+    Main main;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +47,7 @@ public class People extends Fragment implements OnMentorsListener {
         mentorsImage = (ImageView)view.findViewById(R.id.mentorsImage);
         frameLayout = (FrameLayout)view.findViewById(R.id.FLMentors);
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewMentors);
-        LinearLayoutManager llm = new LinearLayoutManager(test.getApplicationContext());
+        LinearLayoutManager llm = new LinearLayoutManager(main.getApplicationContext());
         recyclerView.setLayoutManager(llm);
 
         GetMentors getMentors = new GetMentors(this);
@@ -60,8 +60,8 @@ public class People extends Fragment implements OnMentorsListener {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof Test) {
-            this.test = (Test) context;
+        if (context instanceof Main) {
+            this.main = (Main) context;
         }
     }
 
@@ -69,13 +69,13 @@ public class People extends Fragment implements OnMentorsListener {
         if (mentorsVisible) {
             frameLayout.setVisibility(View.GONE);
             mentorsImage.setImageResource(R.drawable.ic_expand_more_black_24dp);
-            Animation close = AnimationUtils.loadAnimation(test, R.anim.scroll_list_close);
+            Animation close = AnimationUtils.loadAnimation(main, R.anim.scroll_list_close);
             frameLayout.startAnimation(close);
             mentorsVisible = !mentorsVisible;
         } else {
             frameLayout.setVisibility(View.VISIBLE);
             mentorsImage.setImageResource(R.drawable.ic_expand_less_black_24dp);
-            Animation open = AnimationUtils.loadAnimation(test, R.anim.scroll_list_open);
+            Animation open = AnimationUtils.loadAnimation(main, R.anim.scroll_list_open);
             frameLayout.startAnimation(open);
             mentorsVisible = !mentorsVisible;
         }
@@ -84,7 +84,7 @@ public class People extends Fragment implements OnMentorsListener {
     @Override
     public void onMentorsCompleted(ArrayList<User> us) {
         mentors = us;
-        adapter = new RVAdapterUsers(test, mentors);
+        adapter = new RVAdapterUsers(main, mentors);
         recyclerView.setAdapter(adapter);
     }
 

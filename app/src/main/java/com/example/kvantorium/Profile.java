@@ -20,7 +20,7 @@ import java.util.List;
 
 public class Profile extends Fragment implements OnUserListener, OnProjectsListener {
 
-    Test test;
+    Main main;
 
     TextView name;
     TextView vk;
@@ -52,22 +52,22 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
         //name.setText("Махнатеев Степан");
 
         recyclerView = (RecyclerView)view.findViewById(R.id.rvAchievement);
-        LinearLayoutManager llm = new LinearLayoutManager(test.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager llm = new LinearLayoutManager(main.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(llm);
         achievements.add(0);
         achievements.add(1);
-        adapter = new RVAdapterAchievement(test, achievements);
+        adapter = new RVAdapterAchievement(main, achievements);
         recyclerView.setAdapter(adapter);
         //GetUser task = new GetUser(this, test.USER_ID);
         //task.execute();
         setProfile();
-        System.out.println(test.user.getVk());
-        if (test.user.getVk() != "") {
-            vk.setText(test.user.getVk());
+        System.out.println(main.user.getVk());
+        if (main.user.getVk() != "") {
+            vk.setText(main.user.getVk());
             vk.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/" + test.user.getVk()));
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/" + main.user.getVk()));
                     startActivity(browserIntent);
                 }
             });
@@ -76,9 +76,9 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
             vk.setVisibility(View.GONE);
         }
         recyclerViewProjects = (RecyclerView)view.findViewById(R.id.rv_projects_mini);
-        LinearLayoutManager llm2 = new LinearLayoutManager(test.getApplicationContext());
+        LinearLayoutManager llm2 = new LinearLayoutManager(main.getApplicationContext());
         recyclerViewProjects.setLayoutManager(llm2);
-        GetAllProjectsUser task = new GetAllProjectsUser(this,  test.USER_ID, progressBar);
+        GetAllProjectsUser task = new GetAllProjectsUser(this,  main.USER_ID, progressBar);
         task.execute();
         return view;
     }
@@ -87,8 +87,8 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof Test) {
-            this.test = (Test) context;
+        if (context instanceof Main) {
+            this.main = (Main) context;
         }
     }
 
@@ -114,7 +114,7 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
     }
 
     public void setProfile(){
-        name.setText(test.user.getSecondName() + " " + test.user.getFirstName());
+        name.setText(main.user.getSecondName() + " " + main.user.getFirstName());
     }
 
 
@@ -134,7 +134,7 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
     @Override
     public void onProjectsCompleted(ArrayList<Project> proj) {
         projects = proj;
-        adapter_projects = new RVAdapter(test, projects, false, this);
+        adapter_projects = new RVAdapter(main, projects, false, this);
         recyclerViewProjects.setAdapter(adapter_projects);
 //        progressBar.setVisibility(View.GONE);
        // recyclerView.setVisibility(View.VISIBLE);
@@ -150,9 +150,9 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
     public void onProjectCheck(Project proj, int i) {
         checkProject = proj;
         indexCheckProject = i;
-        Intent intent = new Intent(test, ProjectActivity.class);
+        Intent intent = new Intent(main, ProjectActivity.class);
         intent.putExtra("id", checkProject.getId());
-        intent.putExtra("idUser", test.USER_ID);
+        intent.putExtra("idUser", main.USER_ID);
         startActivityForResult(intent, 1);
     }
 }

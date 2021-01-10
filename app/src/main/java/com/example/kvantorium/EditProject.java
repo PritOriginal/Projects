@@ -1,26 +1,17 @@
 package com.example.kvantorium;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.kvantorium.server.ChangeProject;
-import com.example.kvantorium.server.GetComponentsProject;
 import com.example.kvantorium.server.GetProject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EditProject extends AppCompatActivity implements OnProjectListener {
     public int USER_ID;
@@ -117,7 +108,7 @@ public class EditProject extends AppCompatActivity implements OnProjectListener 
             case R.id.action_delete_project:
                 database.delete(dbHelper.TABLE_NAME, "id =" + id, null );
                 dbHelper.close();
-                Intent intent1 = new Intent(EditProject.this, Test.class);
+                Intent intent1 = new Intent(EditProject.this, Main.class);
                 startActivity(intent1);
                 return true;
                 /*

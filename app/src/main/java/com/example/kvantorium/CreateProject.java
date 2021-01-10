@@ -4,8 +4,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -64,7 +62,7 @@ public class CreateProject extends AppCompatActivity implements View.OnClickList
                 //m.addProject(p);
                 //  intent.putExtra("name",name);
                 //intent.putExtra("description",description);
-                Intent intent = new Intent(CreateProject.this, Test.class);
+                Intent intent = new Intent(CreateProject.this, Main.class);
                 startActivity(intent);
                 break;
         }

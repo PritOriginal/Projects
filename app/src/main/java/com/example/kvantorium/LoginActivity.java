@@ -1,6 +1,5 @@
 package com.example.kvantorium;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +12,7 @@ import android.widget.EditText;
 import com.example.kvantorium.server.Login;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class LoginActivity extends AppCompatActivity implements OnRequestLoginListener {
 
@@ -91,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements OnRequestLoginLi
             editor.putString("VK", request.get(5));
             editor.apply();
 
-            Intent intent = new Intent(this, Test.class);
+            Intent intent = new Intent(this, Main.class);
             startActivity(intent);
         }
     }

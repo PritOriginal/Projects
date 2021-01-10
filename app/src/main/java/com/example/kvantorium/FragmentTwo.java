@@ -37,7 +37,7 @@ public class FragmentTwo extends Fragment implements OnComponentsListener, andro
     String HOST = "10.0.2.2";
     int PORT = 8080;
 
-    Test test;
+    Main main;
 
     public FragmentTwo() {
     }
@@ -50,7 +50,7 @@ public class FragmentTwo extends Fragment implements OnComponentsListener, andro
                 false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_allComponents);
-        LinearLayoutManager llm = new LinearLayoutManager(test.getApplicationContext());
+        LinearLayoutManager llm = new LinearLayoutManager(main.getApplicationContext());
         recyclerView.setLayoutManager(llm);
         searchView = (android.widget.SearchView) view.findViewById(R.id.searchComponents);
         searchView.setOnQueryTextListener(this);
@@ -272,13 +272,13 @@ public class FragmentTwo extends Fragment implements OnComponentsListener, andro
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof Test) {
-            this.test = (Test) context;
+        if (context instanceof Main) {
+            this.main = (Main) context;
         }
     }
 
     public void updat(ArrayList<Component> components) {
-        adapter = new RVAdapterComponents(test, allComponent, false);
+        adapter = new RVAdapterComponents(main, allComponent, false);
         recyclerView.setAdapter(adapter);
     }
 
@@ -316,7 +316,7 @@ public class FragmentTwo extends Fragment implements OnComponentsListener, andro
     public void onComponentsCompleted(ArrayList<Component> components) {
         allComponent = components;
         System.out.println("Components size " + components.size());
-        adapter = new RVAdapterComponents(test, allComponent, false);
+        adapter = new RVAdapterComponents(main, allComponent, false);
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);

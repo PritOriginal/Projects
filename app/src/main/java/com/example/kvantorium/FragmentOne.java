@@ -13,9 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TableLayout;
 
 import com.example.kvantorium.server.GetAllProjectsUser;
 
@@ -39,7 +37,7 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
     public int USER_ID = 0;
     private int countID;
 
-    Test test;
+    Main main;
 
     public FragmentOne() {
     }
@@ -50,13 +48,13 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
                 false);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.rv);
-        LinearLayoutManager llm = new LinearLayoutManager(test.getApplicationContext());
+        LinearLayoutManager llm = new LinearLayoutManager(main.getApplicationContext());
         recyclerView.setLayoutManager(llm);
         //ContentValues P = new ContentValues();
-        dbHelper = new DBHelper(test);
+        dbHelper = new DBHelper(main);
         //P.put("name,");
         create = (FloatingActionButton)view.findViewById(R.id.create);
-        create.setOnClickListener(test);
+        create.setOnClickListener(main);
         progressBar = (ProgressBar)view.findViewById(R.id.progressBarProjects);
         progressBar.setProgress(0);
         noneProject = (ImageView)view.findViewById(R.id.noneProject);
@@ -68,7 +66,7 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
         //Table.setColumnStretchable(0, true);
         database = dbHelper.getWritableDatabase();
 
-        GetAllProjectsUser task = new GetAllProjectsUser(this, test.USER_ID, progressBar);
+        GetAllProjectsUser task = new GetAllProjectsUser(this, main.USER_ID, progressBar);
         task.execute();
         //update();
 
@@ -76,7 +74,7 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
     }
     public void update() {
         projects = dbHelper.getAllProjectUser(database, USER_ID);
-        adapter = new RVAdapter(test, projects, false, this);
+        adapter = new RVAdapter(main, projects, false, this);
         recyclerView.setAdapter(adapter);
         dbHelper.close();
     }
@@ -87,8 +85,8 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
 
         switch (v.getId()) {
             case R.id.create:
-                Intent intent = new Intent(test, CreateProject.class);
-                intent.putExtra("idUser", test.USER_ID);
+                Intent intent = new Intent(main, CreateProject.class);
+                intent.putExtra("idUser", main.USER_ID);
                 startActivity(intent);
                 break;
             /*case R.id.clear:
@@ -106,8 +104,8 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof Test) {
-            this.test = (Test) context;
+        if (context instanceof Main) {
+            this.main = (Main) context;
         }
     }
 
@@ -135,7 +133,7 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
     @Override
     public void onProjectsCompleted(ArrayList<Project> proj) {
         projects = proj;
-        adapter = new RVAdapter(test, projects, false, this);
+        adapter = new RVAdapter(main, projects, false, this);
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
@@ -151,7 +149,7 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
     public void onProjectCheck(Project proj, int i) {
         checkProject = proj;
         indexCheckProject = i;
-        Intent intent = new Intent(test, ProjectActivity.class);
+        Intent intent = new Intent(main, ProjectActivity.class);
         intent.putExtra("id", checkProject.getId());
         intent.putExtra("idUser", USER_ID);
         startActivityForResult(intent, 1);
