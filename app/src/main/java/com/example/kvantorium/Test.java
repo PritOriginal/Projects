@@ -6,12 +6,13 @@ public class Test {
     private int id;
     private String name;
     private ArrayList<Question> questions;
+    private boolean complete;
 
-    Test(int id, String name) {
+    public Test(int id, String name, boolean complete) {
         this.id = id;
         this.name = name;
     }
-    Test(int id, String name, ArrayList<Question> questions) {
+    public Test(int id, String name, ArrayList<Question> questions) {
         this.id = id;
         this.name = name;
         this.questions = questions;
@@ -36,5 +37,12 @@ public class Test {
     }
     public ArrayList<Question> getQuestions() {
         return questions;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 }

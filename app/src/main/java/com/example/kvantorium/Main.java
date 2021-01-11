@@ -144,6 +144,8 @@ public class Main extends AppCompatActivity
             fragment = new Profile();
         } else if (id == R.id.nav_people) {
             fragment = new People();
+        } else if (id == R.id.nav_tests) {
+            fragment = new TestsFragment();
         }
 
         // Вставляем фрагмент, заменяя текущий фрагмент
