@@ -7,7 +7,7 @@ public class Question {
     private String question;
     private ArrayList<Answer> answers;
 
-    Question(int id, String question, ArrayList<Answer> answers) {
+    public Question(int id, String question, ArrayList<Answer> answers) {
         this.id = id;
         this.question = question;
         this.answers = answers;

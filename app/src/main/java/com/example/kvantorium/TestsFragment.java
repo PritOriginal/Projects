@@ -1,6 +1,8 @@
 package com.example.kvantorium;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +22,8 @@ public class TestsFragment extends Fragment implements OnTestsListener {
     ProgressBar progressBar;
     RVAdapterTests adapter;
     List<Test> tests;
+    Test checkTest = new Test();
+    int indexCheckTest;
 
     Main main;
     @Override
@@ -56,7 +60,7 @@ public class TestsFragment extends Fragment implements OnTestsListener {
     @Override
     public void onTestsCompleted(ArrayList<Test> tests) {
         this.tests = tests;
-        adapter = new RVAdapterTests(main, tests);
+        adapter = new RVAdapterTests(main, tests, this);
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
@@ -65,5 +69,15 @@ public class TestsFragment extends Fragment implements OnTestsListener {
     @Override
     public void onTestsError(String error) {
 
+    }
+
+    @Override
+    public void onTestCheck(Test test, int i) {
+        checkTest = test;
+        indexCheckTest = i;
+        Intent intent = new Intent(main, TestActivity.class);
+        intent.putExtra("id", checkTest.getId());
+        intent.putExtra("idUser", main.USER_ID);
+        startActivityForResult(intent, 1);
     }
 }

@@ -1,10 +1,10 @@
 package com.example.kvantorium.server;
 
 import android.os.AsyncTask;
-import android.widget.ProgressBar;
 
+import com.example.kvantorium.Answer;
 import com.example.kvantorium.OnTestsListener;
-import com.example.kvantorium.Project;
+import com.example.kvantorium.Question;
 import com.example.kvantorium.Test;
 
 import org.json.JSONArray;
@@ -22,21 +22,18 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GetTestsUser extends AsyncTask<URL, Integer, ArrayList<Test>> {
+public class GetTest extends AsyncTask<URL, Integer, ArrayList<Test>> {
     private OnTestsListener mListener;
-    ProgressBar progressBar;
     ArrayList<Test> tests = new ArrayList<Test>();
     int id;
-    public GetTestsUser(OnTestsListener mListener, int id, ProgressBar progressBar) {
-        this.mListener = mListener;
+    public GetTest(OnTestsListener mListener,int id) {
         this.id = id;
-        this.progressBar = progressBar;
+        this.mListener = mListener;
     }
-
     @Override
     protected ArrayList<Test> doInBackground(URL... urls) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("REQUEST", "getTestsUser");
+        params.put("REQUEST", "getTest");
         params.put("ID", String.valueOf(id));
 
         StringBuilder sbParams = new StringBuilder();
@@ -104,14 +101,30 @@ public class GetTestsUser extends AsyncTask<URL, Integer, ArrayList<Test>> {
                 JSONObject JObject = new JSONObject(result);
                 JSONArray jArray = JObject.getJSONArray("tests");
                 for (i = 0; i < jArray.length(); i++) {
-
                     JSONObject jObject = jArray.getJSONObject(i);
-
                     int id = jObject.getInt("id");
                     String name = jObject.getString("name");
-                    boolean completed = jObject.getInt("completed") == 1 ? true : false;
-                    Test t = new Test(id, name, completed);
-                    tests.add(t);
+                    ArrayList<Question> questions = new ArrayList<Question>();
+                    JSONArray jsonArrayQuestion = jObject.getJSONArray("questions");
+                    for(int j = 0; j < jsonArrayQuestion.length(); j++) {
+                        JSONObject jObjectQuestion = jsonArrayQuestion.getJSONObject(j);
+                        int id_question = jObjectQuestion.getInt("id");
+                        String question = jObjectQuestion.getString("question");
+                        ArrayList<Answer> answers = new ArrayList<Answer>();
+                        JSONArray jsonArrayAnswer = jObjectQuestion.getJSONArray("answers");
+                        for (int k = 0; k < jsonArrayAnswer.length(); k++) {
+                            JSONObject jObjectAnswer = jsonArrayAnswer.getJSONObject(k);
+                            int id_answer = jObjectAnswer.getInt("id");
+                            String answer = jObjectAnswer.getString("answer");
+                            boolean correct = jObjectAnswer.getInt("correct") == 1 ? true : false;
+                            Answer a = new Answer(id_answer, answer, correct);
+                            answers.add(a);
+                        }
+                        Question q = new Question(id_question, question, answers);
+                        questions.add(q);
+                    }
+                    Test test = new Test(id, name, questions);
+                    tests.add(test);
                 }
 
             } finally{
@@ -126,14 +139,6 @@ public class GetTestsUser extends AsyncTask<URL, Integer, ArrayList<Test>> {
     }
 
     @Override
-    protected void onProgressUpdate(Integer... values) {
-        super.onProgressUpdate(values);
-        if (this.progressBar != null) {
-            progressBar.setProgress(values[0]);
-        }
-    }
-
-    @Override
     protected void onPostExecute(ArrayList<Test> tests) {
         //do stuff
         if (mListener != null) {
@@ -141,7 +146,7 @@ public class GetTestsUser extends AsyncTask<URL, Integer, ArrayList<Test>> {
                 mListener.onTestsCompleted(tests);
             }
             else {
-                mListener.onTestsError("Тестов нема");
+                mListener.onTestsError("Теста нема");
             }
         }
     }

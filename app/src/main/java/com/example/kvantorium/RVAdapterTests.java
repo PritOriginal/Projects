@@ -1,5 +1,6 @@
 package com.example.kvantorium;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -11,15 +12,22 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RVAdapterTests extends RecyclerView.Adapter<RVAdapterTests.ViewHolder>  {
     @NonNull
     private Context mContext;
     List<Test> tests;
-    RVAdapterTests(Context mContext, List<Test> tests){
+    ArrayList<Integer> image = new ArrayList<>();
+    OnTestsListener mListener;
+    RVAdapterTests(Context mContext, List<Test> tests, OnTestsListener mListener){
         this.mContext = mContext;
         this.tests = tests;
+        this.mListener = mListener;
+
+        image.add(R.drawable.check);
+        image.add(R.drawable.ic_projects);
     }
 
     @Override
@@ -30,13 +38,25 @@ public class RVAdapterTests extends RecyclerView.Adapter<RVAdapterTests.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RVAdapterTests.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RVAdapterTests.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int i) {
         viewHolder.testName.setText(tests.get(i).getName());
+        viewHolder.completedImage.setImageResource(tests.get(i).isCompleted() == true ? image.get(0) : image.get(1));
+        if(tests.get(i).isCompleted() == true) {
+        ///
+        } else {
+            viewHolder.progressBar.setProgress(0);
+        }
+        viewHolder.cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onTestCheck(tests.get(i), i);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return tests.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
