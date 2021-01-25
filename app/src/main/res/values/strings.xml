@@ -18,6 +18,7 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="login">Вход</string>
     <string name="profile_student">Профиль ученика</string>
+    <string name="test">Тест</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>

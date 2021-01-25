@@ -1,65 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/button"
     android:orientation="vertical"
-    android:padding="8dp"
     tools:context=".TestActivity">
 
-    <TextView
-        android:id="@+id/textView16"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:text="Типо первый вопрос?"
-        android:textColor="@android:color/black"
-        android:textSize="30sp" />
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <RadioGroup
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_test"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.AppBarOverlay"></android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerQuestions"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"></android.support.v4.view.ViewPager>
 
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:text="Ответ 1"
-            android:textSize="24sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:text="Ответ 2"
-            android:textSize="24sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:text="Ответ 3"
-            android:textSize="24sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:text="Ответ 4"
-            android:textSize="24sp" />
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/button"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonNextQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ответить" />
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:onClick="NextQuestion"
+        app:backgroundTint="@android:color/holo_green_light"
+        app:fabSize="auto"
+        app:maxImageSize="@android:dimen/app_icon_size"
+        app:srcCompat="@drawable/ic_check_black_24dp" />
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
