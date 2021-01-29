@@ -7,7 +7,7 @@ import android.support.v4.view.PagerAdapter;
 
 import java.util.ArrayList;
 
-public class PagerAdapterQuestions extends FragmentPagerAdapter {
+public class PagerAdapterQuestions extends FragmentPagerAdapter implements OnQuestionsListener {
     ArrayList<Question> questions;
     public PagerAdapterQuestions(FragmentManager fm, ArrayList<Question> questions) {
         super(fm);
@@ -16,12 +16,21 @@ public class PagerAdapterQuestions extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        QuestionFragment questionFragment = new QuestionFragment(questions.get(i));
+        QuestionFragment questionFragment = new QuestionFragment(questions.get(i), this, i);
         return questionFragment;
     }
 
     @Override
     public int getCount() {
         return questions.size();
+    }
+
+    @Override
+    public void onQuestionSetSelected(int indexQuestion,Question question) {
+        questions.set(indexQuestion, question);
+    }
+
+    public ArrayList<Question> getQuestions() {
+        return questions;
     }
 }

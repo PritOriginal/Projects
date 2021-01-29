@@ -6,6 +6,7 @@ public class Question {
     private int id;
     private String question;
     private ArrayList<Answer> answers;
+    private int id_selected;
 
     public Question(int id, String question, ArrayList<Answer> answers) {
         this.id = id;
@@ -32,5 +33,12 @@ public class Question {
     }
     public void setAnswers(ArrayList<Answer> answers) {
         this.answers = answers;
+    }
+
+    public int getSelected() {
+        return id_selected;
+    }
+    public void setSelected(int id_selected) {
+        this.id_selected = id_selected;
     }
 }
