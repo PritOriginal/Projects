@@ -65,10 +65,12 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
     }
  */
     public void NextQuestion(View view) {
-        if (viewPager.getCurrentItem() != pageAdapter.getCount()) {
+        if (viewPager.getCurrentItem() != pageAdapter.getCount() - 1) {
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
         } else {
-            SendTest sendTest = new SendTest(id, USER_ID);
+            SendTest sendTest = new SendTest(id, USER_ID, pageAdapter.getQuestions());
+            sendTest.execute();
+
         }
     }
 

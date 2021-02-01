@@ -7,13 +7,15 @@ public class Test {
     private String name;
     private ArrayList<Question> questions;
     private boolean completed;
+    private int progress;
 
     public Test() {
 
     }
-    public Test(int id, String name, boolean complete) {
+    public Test(int id, String name, boolean completed) {
         this.id = id;
         this.name = name;
+        this.completed = completed;
     }
     public Test(int id, String name, ArrayList<Question> questions) {
         this.id = id;

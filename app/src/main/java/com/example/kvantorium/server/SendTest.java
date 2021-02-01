@@ -24,7 +24,6 @@ public class SendTest extends AsyncTask<URL, Integer, ArrayList<String>> {
     int id_user;
     int id_test;
     ArrayList<Question> questions;
-    String data;
     public SendTest(int id_user, int id_test, ArrayList<Question> questions) {
         this.id_user = id_user;
         this.id_test = id_test;
@@ -32,15 +31,23 @@ public class SendTest extends AsyncTask<URL, Integer, ArrayList<String>> {
     }
     @Override
     protected ArrayList<String> doInBackground(URL... urls) {
+        String id_answers;
+        StringBuilder idAnswers = new StringBuilder();
         for (int i = 0; i < questions.size(); i++) {
-            ArrayList<Answer> answers = questions.get(i).getAnswers();
-
+            if (i == 0) {
+                idAnswers.append(questions.get(i).getSelected());
+            }
+            else {
+                idAnswers.append("," + questions.get(i).getSelected());
+            }
         }
+        id_answers = idAnswers.toString();
+
         HashMap<String, String> params = new HashMap<>();
         params.put("REQUEST", "sendTest");
         params.put("ID", String.valueOf(id_user));
-        params.put("ID2",String.valueOf(id_test));
-        params.put("DATA", data);
+        params.put("ID_2",String.valueOf(id_test));
+        params.put("DATA", id_answers);
 
         StringBuilder sbParams = new StringBuilder();
         int i = 0;
