@@ -1,6 +1,8 @@
 package com.example.kvantorium;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabItem;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +24,9 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
     ViewPager viewPager;
     PagerAdapterQuestions pageAdapter;
     RadioGroup radioGroup;
+    TabLayout tabLayout;
     FloatingActionButton next;
+    ArrayList<Question> questions = new ArrayList<Question>();
     int indexQuestion = 0;
     public int id;
     public int USER_ID;
@@ -42,8 +46,8 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
 
         question = (TextView) findViewById(R.id.text_question);
         radioGroup = (RadioGroup) findViewById(R.id.radio_group_answers);
+        tabLayout = (TabLayout) findViewById(R.id.tabs_questions);
         next = (FloatingActionButton) findViewById(R.id.buttonNextQuestion);
-
         GetTest getTest = new GetTest(this, id);
         getTest.execute();
 
@@ -77,9 +81,31 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
     @Override
     public void onTestsCompleted(ArrayList<Test> tests) {
         test = tests.get(0);
-        pageAdapter = new PagerAdapterQuestions(getSupportFragmentManager(), test.getQuestions());
+        questions = test.getQuestions();
+        for (int i = 0; i < questions.size(); i++) {
+            TabItem tabItem = new TabItem(this);
+            //TabLayout.Tab tab = new TabLayout.Tab();
+       //     tabLayout.addTab(tabLayout.newTab().);
+        }
+        pageAdapter = new PagerAdapterQuestions(getSupportFragmentManager(), questions, tabLayout);
         viewPager.setAdapter(pageAdapter);
-        //setTest();
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override

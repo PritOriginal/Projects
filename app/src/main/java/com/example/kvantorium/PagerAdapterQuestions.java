@@ -1,5 +1,6 @@
 package com.example.kvantorium;
 
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,9 +10,11 @@ import java.util.ArrayList;
 
 public class PagerAdapterQuestions extends FragmentPagerAdapter implements OnQuestionsListener {
     ArrayList<Question> questions;
-    public PagerAdapterQuestions(FragmentManager fm, ArrayList<Question> questions) {
+    TabLayout tabLayout;
+    public PagerAdapterQuestions(FragmentManager fm, ArrayList<Question> questions, TabLayout tabLayout) {
         super(fm);
         this.questions = questions;
+        this.tabLayout = tabLayout;
     }
 
     @Override

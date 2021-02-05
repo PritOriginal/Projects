@@ -12,10 +12,11 @@ public class Test {
     public Test() {
 
     }
-    public Test(int id, String name, boolean completed) {
+    public Test(int id, String name, boolean completed, int progress) {
         this.id = id;
         this.name = name;
         this.completed = completed;
+        this.progress = progress;
     }
     public Test(int id, String name, ArrayList<Question> questions) {
         this.id = id;
@@ -49,5 +50,12 @@ public class Test {
     }
     public void setCompleted(boolean complete) {
         this.completed = complete;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 }

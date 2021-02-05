@@ -42,7 +42,7 @@ public class RVAdapterTests extends RecyclerView.Adapter<RVAdapterTests.ViewHold
         viewHolder.testName.setText(tests.get(i).getName());
         viewHolder.completedImage.setImageResource(tests.get(i).isCompleted() == true ? image.get(0) : image.get(1));
         if(tests.get(i).isCompleted() == true) {
-        ///
+            viewHolder.progressBar.setProgress(tests.get(i).getProgress());
         } else {
             viewHolder.progressBar.setProgress(0);
         }
@@ -72,5 +72,4 @@ public class RVAdapterTests extends RecyclerView.Adapter<RVAdapterTests.ViewHold
             completedImage = (ImageView)itemView.findViewById(R.id.completedTest);
         }
     }
-
 }

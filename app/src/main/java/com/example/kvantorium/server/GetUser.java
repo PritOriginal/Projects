@@ -53,7 +53,7 @@ public class GetUser extends AsyncTask<URL, Integer, User> {
 
         try {
 //            String params = "REQUEST=js";
-            String url = "http://192.168.1.73/PythonProject/server_test.py";
+            String url = "http://192.168.1.14/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 

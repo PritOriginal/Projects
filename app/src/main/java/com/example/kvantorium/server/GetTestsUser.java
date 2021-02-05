@@ -58,7 +58,7 @@ public class GetTestsUser extends AsyncTask<URL, Integer, ArrayList<Test>> {
 
         try {
 //            String params = "REQUEST=js";
-            String url = "http://192.168.1.73/PythonProject/server_test.py";
+            String url = "http://192.168.1.14/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 
@@ -110,7 +110,8 @@ public class GetTestsUser extends AsyncTask<URL, Integer, ArrayList<Test>> {
                     int id = jObject.getInt("id");
                     String name = jObject.getString("name");
                     boolean completed = jObject.getInt("completed") == 1 ? true : false;
-                    Test t = new Test(id, name, completed);
+                    int progress = jObject.getInt("progress");
+                    Test t = new Test(id, name, completed, progress);
                     tests.add(t);
                 }
 
