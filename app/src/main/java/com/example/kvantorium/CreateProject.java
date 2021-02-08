@@ -47,21 +47,8 @@ public class CreateProject extends AppCompatActivity implements View.OnClickList
             case R.id.createProject:
                 String name = nameProject.getText().toString();
                 String description = descriptionProject.getText().toString();
-                //projectsDB.execSQL("CREATE TABLE");
-                //ContentValues P = new ContentValues();
-                //P.put("name", name);
-                //P.put("description", description);
                 AddProject task = new AddProject(USER_ID, name, description);
                 task.execute();
-                /* база
-                contentValues.put(DBHelper.ID_USER ,USER_ID);
-                contentValues.put(DBHelper.NAME, name);
-                contentValues.put(DBHelper.DESCRIPTION, description);
-                database.insert(DBHelper.TABLE_NAME, null, contentValues);
-                 */
-                //m.addProject(p);
-                //  intent.putExtra("name",name);
-                //intent.putExtra("description",description);
                 Intent intent = new Intent(CreateProject.this, Main.class);
                 startActivity(intent);
                 break;
@@ -71,17 +58,9 @@ public class CreateProject extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        //int id_ = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
-                //Intent intent = new Intent(this, Test.class);
-                //startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

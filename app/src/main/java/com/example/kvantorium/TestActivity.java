@@ -52,22 +52,6 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
         getTest.execute();
 
     }
-/*
-    public void setTest(){
-        ArrayList<Question> questions = test.getQuestions();
-        question.setText(questions.get(indexQuestion).getQuestion());
-        ArrayList<Answer> answers = questions.get(indexQuestion).getAnswers();
-        for (int i = 0; i < answers.size(); i++) {
-            RadioButton radioButton = new RadioButton(this);
-            radioButton.setText(answers.get(i).getAnswer());
-
-            //final View v = getLayoutInflater().inflate(R.layout.answer_radio_button, null);
-            //RadioButton radioButtonAnswer = (RadioButton)v.findViewById(R.id.radioButtonAnswer);
-            //radioButtonAnswer.setText(answers.get(i).getAnswer());
-            radioGroup.addView(radioButton);
-        }
-    }
- */
     public void NextQuestion(View view) {
         if (viewPager.getCurrentItem() != pageAdapter.getCount() - 1) {
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
@@ -84,8 +68,6 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
         questions = test.getQuestions();
         for (int i = 0; i < questions.size(); i++) {
             TabItem tabItem = new TabItem(this);
-            //TabLayout.Tab tab = new TabLayout.Tab();
-       //     tabLayout.addTab(tabLayout.newTab().);
         }
         pageAdapter = new PagerAdapterQuestions(getSupportFragmentManager(), questions, tabLayout);
         viewPager.setAdapter(pageAdapter);

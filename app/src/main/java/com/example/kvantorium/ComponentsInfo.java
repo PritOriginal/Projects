@@ -74,17 +74,12 @@ public class ComponentsInfo extends AppCompatActivity implements OnComponentsLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.component_toolbar_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        //int id_ = item.getItemId();
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
@@ -98,7 +93,6 @@ public class ComponentsInfo extends AppCompatActivity implements OnComponentsLis
     public void onComponentsCompleted(ArrayList<Component> components) {
         component = components.get(0);
         descriptionListener.onComponentsCompleted(components);
-//        documentationListener.onComponentsCompleted(components);
         characteristicsListener.onComponentsCompleted(components);
     }
 

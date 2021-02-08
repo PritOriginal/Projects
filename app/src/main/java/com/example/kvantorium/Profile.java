@@ -48,9 +48,6 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
         name = (TextView) view.findViewById(R.id.profile_name);
         vk = (TextView) view.findViewById(R.id.profile_vk);
         raiting = (TextView) view.findViewById(R.id.raiting);
-        //r = test.getIntent().getExtras().getInt("raiting");
-        //name.setText("Махнатеев Степан");
-
         recyclerView = (RecyclerView)view.findViewById(R.id.rvAchievement);
         LinearLayoutManager llm = new LinearLayoutManager(main.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(llm);
@@ -58,8 +55,6 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
         achievements.add(1);
         adapter = new RVAdapterAchievement(main, achievements);
         recyclerView.setAdapter(adapter);
-        //GetUser task = new GetUser(this, test.USER_ID);
-        //task.execute();
         setProfile();
         System.out.println(main.user.getVk());
         if (main.user.getVk() != "") {
@@ -105,7 +100,6 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
             checkProject.setCompleted(completed);
             projects.set(indexCheckProject, checkProject);
             adapter_projects.setProjects(projects);
-            //System.out.println("Проект" + name + ";" + description + ";" + completed);
         }
         else {
             projects.remove(indexCheckProject);
@@ -136,14 +130,10 @@ public class Profile extends Fragment implements OnUserListener, OnProjectsListe
         projects = proj;
         adapter_projects = new RVAdapter(main, projects, false, this);
         recyclerViewProjects.setAdapter(adapter_projects);
-//        progressBar.setVisibility(View.GONE);
-       // recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onProjectsError(String error) {
-        //noneProject.setVisibility(View.VISIBLE);
-//        progressBar.setVisibility(View.GONE);
     }
 
     @Override

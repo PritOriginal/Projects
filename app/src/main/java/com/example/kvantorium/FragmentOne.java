@@ -21,10 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentOne extends Fragment implements View.OnClickListener, OnProjectsListener {
-//    Context context;
-
     FloatingActionButton create;
-    //FloatingActionButton clear;
     DBHelper dbHelper;
     SQLiteDatabase database;
     RecyclerView recyclerView;
@@ -58,18 +55,10 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
         progressBar = (ProgressBar)view.findViewById(R.id.progressBarProjects);
         progressBar.setProgress(0);
         noneProject = (ImageView)view.findViewById(R.id.noneProject);
-        //clear = (FloatingActionButton)view.findViewById(R.id.clear);
-        //clear.setOnClickListener(test);
-        //  add = (Button) findViewById(R.id.add);
-        //  add.setOnClickListener(this);
-        // lay = (LinearLayout) findViewById(R.id.lay);
-        //Table.setColumnStretchable(0, true);
         database = dbHelper.getWritableDatabase();
 
         GetAllProjectsUser task = new GetAllProjectsUser(this, main.USER_ID, progressBar);
         task.execute();
-        //update();
-
         return view;
     }
     public void update() {
@@ -89,14 +78,6 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
                 intent.putExtra("idUser", main.USER_ID);
                 startActivity(intent);
                 break;
-            /*case R.id.clear:
-                //database.delete("projects", null, null);
-                //database.delete(dbHelper.TABLE_NAME, null, null);
-                Intent intent1 = new Intent(test, Test.class);
-                startActivity(intent1);
-                break;
-
-             */
         }
     }
 
@@ -122,7 +103,6 @@ public class FragmentOne extends Fragment implements View.OnClickListener, OnPro
             checkProject.setCompleted(completed);
             projects.set(indexCheckProject, checkProject);
             adapter.setProjects(projects);
-            //System.out.println("Проект" + name + ";" + description + ";" + completed);
         }
         else {
             projects.remove(indexCheckProject);

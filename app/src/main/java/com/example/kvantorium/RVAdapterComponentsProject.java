@@ -35,13 +35,9 @@ import static android.support.constraint.Constraints.TAG;
 public class RVAdapterComponentsProject extends RecyclerView.Adapter<RVAdapterComponentsProject.ViewHolder> {
     @NonNull
     List<Component> components;
-    ArrayList<Integer> image = new ArrayList<>();
-    DBHelper dbHelper;
-    SQLiteDatabase database;
     private Context mContext;
     OnComponentsListener mListener;
 
-    //int idProject;
     RVAdapterComponentsProject(Context mContext, List<Component> components, OnComponentsListener mListener) {
         this.components = components;
         Collections.sort(this.components, new Comparator<Component>() {
@@ -51,21 +47,8 @@ public class RVAdapterComponentsProject extends RecyclerView.Adapter<RVAdapterCo
                 return o1.getNameComponent().compareTo(o2.getNameComponent());
             }
         });
-        //this.idProject = idProject;
         this.mContext = mContext;
         this.mListener = mListener;
-
-        //<<<<<=================== Типо картинки
-        /*
-        image = new ArrayList<>();
-        image.add(R.drawable.arduino_uno);
-        image.add(R.drawable.led_diode_5mm);
-        image.add(R.drawable.intel_edison);
-        image.add(R.drawable.joystick_overview);
-        image.add(R.drawable.ph_sensor);
-        image.add(R.drawable.raspberry_pi_3_model_b_plus);
-        image.add(R.drawable.sealed_temperature_sensor_ds18b20_0);
-        */
     }
 
     @Override

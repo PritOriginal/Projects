@@ -33,8 +33,6 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
     TextView description;
     FloatingActionButton complete;
     public int USER_ID;
-    DBHelper dbHelper;
-    SQLiteDatabase database;
     Project project;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -54,11 +52,6 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_project);
-//        setSupportActionBar(toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         tabLayout = (TabLayout)findViewById(R.id.tabs);
         TabItem tabComponents = (TabItem)findViewById(R.id.tabComponents);
@@ -124,7 +117,6 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        //int id_ = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
@@ -139,9 +131,6 @@ public class ProjectMentorActivity extends AppCompatActivity implements OnProjec
                 dialogFragment.show(getSupportFragmentManager(), TAG);
                 return true;
             case android.R.id.home:
-              //  Intent intent2 = new Intent(this, ProfileActivity.class);
-              //  intent2.putExtra("id", USER_ID);
-             //   startActivity(intent2);
                 Intent intent2 = new Intent();
                 intent2.putExtra("name", project.getName());
                 intent2.putExtra("description", project.getDescription());

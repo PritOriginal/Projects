@@ -58,7 +58,6 @@ public class GetMentors extends AsyncTask<URL, Integer, ArrayList<User>> {
 
             try {
                 byte[]postDataBytes = sbParams.toString().getBytes("UTF-8");
-                //conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestProperty("Accept", "application/text");
                 conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
                 conn.setRequestMethod("POST");
@@ -94,7 +93,7 @@ public class GetMentors extends AsyncTask<URL, Integer, ArrayList<User>> {
                     int id = jObject.getInt("id");
                     String firstName = jObject.getString("patronymic");
                     String secondName = jObject.getString("name");
-                    String role = "Наставник " + jObject.getString("role");
+                    String role = "Преподаватель";
                     User mentor = new User(id, firstName, secondName, role);
                     mentors.add(mentor);
                 }

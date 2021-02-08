@@ -15,12 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements OnRequestLoginListener {
-
-    String HOST = "192.168.1.199";
-    int PORT = 8080;
-
-    Server server;
-
     EditText inLogin;
     EditText inPassword;
     Button signIn;
@@ -54,17 +48,9 @@ public class LoginActivity extends AppCompatActivity implements OnRequestLoginLi
         Cashe cashe = new Cashe();
         password = cashe.md5(password);
         System.out.println("PASSWORD: " + password);
-        //password = DigestUtils.md5Hex(st);
 
         Login task = new Login(this, login, password);
         task.execute();
-        /*
-        try {
-            request = task.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-         */
     }
 
     @Override
@@ -73,10 +59,6 @@ public class LoginActivity extends AppCompatActivity implements OnRequestLoginLi
         System.out.println("REQUEST: " + request.get(0));
         if (request.get(0).equals("true")) {
             System.out.println("REQUEST: OK");
-            //sPref = getPreferences(MODE_PRIVATE);
-            //SharedPreferences.Editor ed = sPref.edit();
-            //ed.putString("USER_ID", request.get(1));
-            //ed.apply();
             // Запоминаем данные
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putInt("USER_ID", Integer.parseInt(request.get(1)));

@@ -36,8 +36,6 @@ public class GetComponentByComponentProject extends AsyncTask<URL, Integer, Arra
         params.put("REQUEST", "getComponentByComponentProject");
         params.put("ID", String.valueOf(id));
 
-        String data = null;
-
         StringBuilder sbParams = new StringBuilder();
         int i = 0;
         for (String key : params.keySet()) {
@@ -56,14 +54,12 @@ public class GetComponentByComponentProject extends AsyncTask<URL, Integer, Arra
 
 
         try {
-//            String params = "REQUEST=js";
             String url = "http://192.168.1.14/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 
             try {
                 byte[]postDataBytes = sbParams.toString().getBytes("UTF-8");
-                //conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestProperty("Accept", "application/text");
                 conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
                 conn.setRequestMethod("POST");
@@ -73,16 +69,6 @@ public class GetComponentByComponentProject extends AsyncTask<URL, Integer, Arra
                 conn.getOutputStream().write(postDataBytes);
 
                 conn.connect();
-
-                /*
-                String paramsString = sbParams.toString();
-                //  String paramsString = "a=test";
-
-                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                wr.writeBytes(paramsString);
-                wr.flush();
-                wr.close();
-                 */
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -99,15 +85,7 @@ public class GetComponentByComponentProject extends AsyncTask<URL, Integer, Arra
 
                 String result = result1.toString();
                 System.out.println("From server: " + result);
-/*
-                JSONObject JObject = new JSONObject(result);
-                String name = JObject.getString("name");
-                int count = JObject.getInt("count");
-                Component c = new Component();
-                c.setNameComponent(name);
-                c.setNumber(count);
-                components.add(c);
-*/
+
                 JSONObject JObject = new JSONObject(result);
 
                 int id = JObject.getInt("id");
@@ -140,8 +118,6 @@ public class GetComponentByComponentProject extends AsyncTask<URL, Integer, Arra
 
     @Override
     protected void onPostExecute(ArrayList<Component> components) {
-        //do stuff
-        //super.onPostExecute(components);
         if (mListener != null) {
             mListener.onComponentsCompleted(components);
         }

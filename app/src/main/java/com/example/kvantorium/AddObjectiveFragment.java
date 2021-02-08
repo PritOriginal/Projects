@@ -22,41 +22,17 @@ public class AddObjectiveFragment extends DialogFragment implements DialogInterf
         this.mListener = mListener;
     }
 
-    /*
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        getDialog().setTitle("Цель");
-        View v = inflater.inflate(R.layout.add_objective, null);
-        v.findViewById(R.id.input_text);
-        v.findViewById(R.id.createObjective);
-        v.findViewById(R.id.cancel);
-        return v;
-    }
-*/
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.add_objective, null);
         view.findViewById(R.id.input_text);
         objective = (EditText)view.findViewById(R.id.input_text);
-        //view.findViewById(R.id.createObjective);
-        //view.findViewById(R.id.cancel);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view)
                 .setTitle("Задача")
                 .setPositiveButton("Создать", this)
                 .setNegativeButton("Отмена", this);
-                /*
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //отправляем результат обратно
-                        Intent intent = new Intent();
-                        intent.putExtra(TAG_WEIGHT_SELECTED, mNpWeight.getValue());
-                        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
-                    }
-                });
-        */
         return builder.create();
     }
 

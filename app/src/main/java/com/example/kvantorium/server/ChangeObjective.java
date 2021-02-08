@@ -48,10 +48,7 @@ public class ChangeObjective extends AsyncTask<URL, Integer, ArrayList<String>> 
             }
             i++;
         }
-
-
         try {
-//            String params = "REQUEST=js";
             String url = "http://192.168.1.14/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
@@ -68,16 +65,6 @@ public class ChangeObjective extends AsyncTask<URL, Integer, ArrayList<String>> 
                 conn.getOutputStream().write(postDataBytes);
 
                 conn.connect();
-
-                /*
-                String paramsString = sbParams.toString();
-                //  String paramsString = "a=test";
-
-                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                wr.writeBytes(paramsString);
-                wr.flush();
-                wr.close();
-                 */
             } catch (IOException e) {
                 e.printStackTrace();
             }

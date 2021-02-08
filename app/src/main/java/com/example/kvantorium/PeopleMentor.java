@@ -159,8 +159,6 @@ public class PeopleMentor extends Fragment implements OnUsersListener {
     @Override
     public void onUsersCompleted(ArrayList<User> us) {
         users = us;
-       // adapter = new RVAdapterUsers(main, users);
-       // recyclerView.setAdapter(adapter);
         sorting();
     }
 

@@ -42,12 +42,6 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectListe
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_project);
-//        setSupportActionBar(toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         tabLayout = (TabLayout)findViewById(R.id.tabs);
         TabItem tabComponents = (TabItem)findViewById(R.id.tabComponents);
         TabItem tabObjectives = (TabItem)findViewById(R.id.tabObjectives);
@@ -119,17 +113,6 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectListe
         dialogFragment = new AddTeammateFragment();
         dialogFragment.show(getSupportFragmentManager(), TAG);
     }
-    /*
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,7 +126,6 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectListe
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        //int id_ = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
@@ -238,21 +220,4 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectListe
         setResult(RESULT_OK, intent1);
         this.finish();
     }
-/*
-    @Override
-    public void onObjectiveCompleted(String objective) {
-        System.out.println("objective: " + objective);
-        AddObjective addObjective = new AddObjective(id, objective);
-        addObjective.execute();
-        ObjectivesProject objectivesProject = (ObjectivesProject) pageAdapter.getItem(1);
-        RVAdapterObjective rvAdapterObjective = (RVAdapterObjective) objectivesProject.adapter;
-        Objective o = new Objective(objective, false);
-        updateObjectiveListener.onUpdateObjectiveCompleted(o);
-    }
-
-    @Override
-    public void onObjectiveError(String error) {
-
-    }
-    */
 }

@@ -63,10 +63,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> implem
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         viewHolder.projectName.setText(projects.get(i).getName());
-        //viewHolder.projectName.setId(i);
         viewHolder.projectDescription.setText(projects.get(i).getDescription());
-        //viewHolder.projectDescription.setId(i);
-        //viewHolder.completedImage.setVisibility(projects.get(i).isCompleted() == true ? View.VISIBLE : View.INVISIBLE);
         viewHolder.completedImage.setImageResource(projects.get(i).isCompleted() == true ? image.get(0) : image.get(1));
         viewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override

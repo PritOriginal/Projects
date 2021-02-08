@@ -51,17 +51,13 @@ public class GetTest extends AsyncTask<URL, Integer, ArrayList<Test>> {
             }
             i++;
         }
-
-
         try {
-//            String params = "REQUEST=js";
             String url = "http://192.168.1.14/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
 
             try {
                 byte[]postDataBytes = sbParams.toString().getBytes("UTF-8");
-                //conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestProperty("Accept", "application/text");
                 conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
                 conn.setRequestMethod("POST");
@@ -71,16 +67,6 @@ public class GetTest extends AsyncTask<URL, Integer, ArrayList<Test>> {
                 conn.getOutputStream().write(postDataBytes);
 
                 conn.connect();
-
-                /*
-                String paramsString = sbParams.toString();
-                //  String paramsString = "a=test";
-
-                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                wr.writeBytes(paramsString);
-                wr.flush();
-                wr.close();
-                 */
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -126,7 +112,6 @@ public class GetTest extends AsyncTask<URL, Integer, ArrayList<Test>> {
                     Test test = new Test(id, name, questions);
                     tests.add(test);
                 }
-
             } finally{
                 if (conn != null) {
                     conn.disconnect();
@@ -140,7 +125,6 @@ public class GetTest extends AsyncTask<URL, Integer, ArrayList<Test>> {
 
     @Override
     protected void onPostExecute(ArrayList<Test> tests) {
-        //do stuff
         if (mListener != null) {
             if (tests.size() != 0) {
                 mListener.onTestsCompleted(tests);

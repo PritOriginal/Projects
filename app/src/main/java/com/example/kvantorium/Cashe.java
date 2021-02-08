@@ -8,19 +8,6 @@ public class Cashe {
     public String md5(String s) {
         MessageDigest digest;
         try {
-            // Create MD5 Hash
-            /*
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes());
-            byte messageDigest[] = digest.digest();
-
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i=0; i<messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-
-            return hexString.toString();
-            */
             digest = MessageDigest.getInstance("MD5");
             digest.reset();
             digest.update(s.getBytes());

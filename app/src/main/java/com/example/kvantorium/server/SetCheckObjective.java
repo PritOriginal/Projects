@@ -29,33 +29,6 @@ public class SetCheckObjective extends AsyncTask<URL, Integer, ArrayList<String>
 
     @Override
     protected ArrayList<String> doInBackground(URL... urls) {
-        /*
-        String id_;
-        StringBuilder idObj = new StringBuilder();
-        for (int i = 0; i < id.size(); i++) {
-            if (i == 0) {
-                idObj.append(id.get(i));
-            }
-            else {
-                idObj.append("," + id.get(i));
-            }
-        }
-        id_ = idObj.toString();
-
-        String check_;
-        StringBuilder countSb = new StringBuilder();
-        for (int i = 0; i < check.size(); i++) {
-            if (i == 0) {
-                countSb.append(check.get(i));
-            }
-            else {
-                countSb.append("," + check.get(i));
-            }
-        }
-        check_ = countSb.toString();
-
-         */
-
         HashMap<String, String> params = new HashMap<>();
         params.put("REQUEST", "setCheckObjective");
         params.put("ID", String.valueOf(id));
@@ -76,10 +49,7 @@ public class SetCheckObjective extends AsyncTask<URL, Integer, ArrayList<String>
             }
             i++;
         }
-
-
         try {
-//            String params = "REQUEST=js";
             String url = "http://192.168.1.14/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
@@ -87,7 +57,6 @@ public class SetCheckObjective extends AsyncTask<URL, Integer, ArrayList<String>
             try {
                 System.out.println(sbParams.toString());
                 byte[]postDataBytes = sbParams.toString().getBytes("UTF-8");
-                //conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestProperty("Accept", "application/text");
                 conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
                 conn.setRequestMethod("POST");
@@ -97,16 +66,6 @@ public class SetCheckObjective extends AsyncTask<URL, Integer, ArrayList<String>
                 conn.getOutputStream().write(postDataBytes);
 
                 conn.connect();
-
-                /*
-                String paramsString = sbParams.toString();
-                //  String paramsString = "a=test";
-
-                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                wr.writeBytes(paramsString);
-                wr.flush();
-                wr.close();
-                 */
             } catch (IOException e) {
                 e.printStackTrace();
             }

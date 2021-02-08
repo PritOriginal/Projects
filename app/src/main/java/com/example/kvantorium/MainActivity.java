@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    //public ArrayList<Project> projects = new ArrayList<Project>();
-    //  Button add;
     FloatingActionButton create;
     FloatingActionButton clear;
     DBHelper dbHelper;
@@ -35,17 +33,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView = (RecyclerView)findViewById(R.id.rv);
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(llm);
-        //ContentValues P = new ContentValues();
         dbHelper = new DBHelper(this);
-        //P.put("name,");
         create = (FloatingActionButton) findViewById(R.id.create);
         create.setOnClickListener(this);
-//        clear = (FloatingActionButton)findViewById(R.id.clear);
-//        clear.setOnClickListener(this);
-        //  add = (Button) findViewById(R.id.add);
-        //  add.setOnClickListener(this);
-        // lay = (LinearLayout) findViewById(R.id.lay);
-        //Table.setColumnStretchable(0, true);
         database = dbHelper.getWritableDatabase();
 
         update();
@@ -59,22 +49,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        ContentValues contentValues = new ContentValues();
-
         switch (v.getId()) {
             case R.id.create:
                 Intent intent = new Intent(MainActivity.this, CreateProject.class);
                 intent.putExtra("idUser", USER_ID);
                 startActivity(intent);
                 break;
-        /*    case R.id.clear:
-                //database.delete("projects", null, null);
-                //database.delete(dbHelper.TABLE_NAME, null, null);
-                Intent intent1 = new Intent(MainActivity.this, Test.class);
-                startActivity(intent1);
-                break;
-
-         */
         }
     }
 }

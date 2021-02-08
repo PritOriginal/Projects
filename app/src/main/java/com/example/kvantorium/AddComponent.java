@@ -58,23 +58,13 @@ public class AddComponent extends AppCompatActivity implements View.OnClickListe
         id = getIntent().getExtras().getInt("id");
         GetAllComponents task = new GetAllComponents(this, progressBar);
         task.execute();
-        //allComponent = dbHelper.getAllComponents(database);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        //int id_ = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
-                //Intent intent = new Intent(this, Test.class);
-                //intent.putExtra("id", id);
-                //startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -90,18 +80,6 @@ public class AddComponent extends AppCompatActivity implements View.OnClickListe
                 ArrayList<Integer> number = adapter.getCountUse();
                 ArrayList<Integer> idComp = adapter.getIdComponents();
                 while (i < adapter.getItemCount()) {
-                    //boolean haveComp = false;
-                    //int id_e = Integer.parseInt(String.valueOf("1" + i));
-                    //int id_t = Integer.parseInt(String.valueOf("2" + i));
-                    //EditText e = (EditText)recyclerView.findViewById(id_e);
-                    //TextView t = (TextView)recyclerView.findViewById(id_t);
-                    //String nameComp = t.getText().toString();
-                    //String num = e.getText().toString();
-                    //int number = Integer.parseInt(num);
-                    //int id_e = Integer.parseInt("1" + i);
-                    //recyclerView.getAdapter().notifyDataSetChanged();
-                    //EditText e = recyclerView.getLayoutManager().findViewByPosition(i).findViewById(R.id.addComponent_number);
-                    //EditText e = (EditText)view.findViewById(R.id.addComponent_number);
                     System.out.println("count: " + number);
                     if (number.get(i) != 0) {
                         idComponent.add(idComp.get(i));
@@ -114,68 +92,6 @@ public class AddComponent extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
                 this.finish();
-                /*
-                int i = 0;
-                while (i < allComponent.size()) {
-                    boolean haveComp = false;
-                    int id_e = Integer.parseInt(String.valueOf("1" + i));
-                    int id_t = Integer.parseInt(String.valueOf("2" + i));
-                    EditText e = (EditText) findViewById(id_e);
-                    TextView t = (TextView) findViewById(id_t);
-                    String nameComp = t.getText().toString();
-                    String num = e.getText().toString();
-                    int number = Integer.parseInt(num);
-                    if (number != 0) {
-                        Cursor cursor = database.query(DBHelper.TABLE_NAME3, null, null, null, null, null, null);
-                        if (cursor.moveToFirst()) {
-                            do {
-                                int idColIndexComponent = cursor.getColumnIndex(DBHelper.ID);
-                                int idComp = cursor.getInt(idColIndexComponent);
-                                if (i + 1 == idComp) {
-                                    Cursor cursor1 = database.query(DBHelper.TABLE_NAME2, null, null, null, null, null, null);
-                                    if (cursor1.moveToFirst()) {
-                                        do {
-                                            int idProjectColIndexComp = cursor1.getColumnIndex(DBHelper.ID_PROJECT);
-                                            int idProject = cursor1.getInt(idProjectColIndexComp);
-                                            if (idProject == id) {
-                                                int idColIndexComp = cursor1.getColumnIndex(DBHelper.ID);
-                                                int idComponent = cursor1.getInt(idColIndexComp);
-                                                int numberColIndexComp = cursor1.getColumnIndex(DBHelper.NUMBER);
-                                                int numberComp = cursor1.getInt(numberColIndexComp);
-                                                int idCompColIndexComp = cursor1.getColumnIndex(DBHelper.ID_COMPONENT);
-                                                int idComp_ = cursor1.getInt(idCompColIndexComp);
-                                                if (idComp == idComp_) {
-                                                    ContentValues contentValues = new ContentValues();
-                                                    contentValues.put(DBHelper.NUMBER, numberComp + number);
-                                                    database.update(DBHelper.TABLE_NAME2, contentValues, DBHelper.ID + " = " + idComponent, null);
-                                                    haveComp = true;
-                                                }
-                                            }
-                                        } while (cursor1.moveToNext());
-                                        if (haveComp == false) {
-                                            ContentValues contentValues = new ContentValues();
-                                            contentValues.put(DBHelper.ID_PROJECT, id);
-                                            contentValues.put(DBHelper.ID_COMPONENT, i + 1);
-                                            contentValues.put(DBHelper.NUMBER, number);
-                                            database.insert(DBHelper.TABLE_NAME2, null, contentValues);
-                                        }
-                                    } else {
-                                        cursor1.close();
-                                    }
-                                }
-                            } while (cursor.moveToNext());
-                        } else {
-                            cursor.close();
-                        }
-                    }
-                    dbHelper.updateComponent(database, i + 1, number);
-                    i++;
-                }
-                Intent intent = new Intent(AddComponent.this, EditProject.class);
-                //           id++;
-                intent.putExtra("id", id);
-                startActivity(intent);
-                 */
                 break;
         }
     }

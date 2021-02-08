@@ -65,7 +65,6 @@ public class GetObjectivesProject extends AsyncTask<URL, Integer, ArrayList<Obje
 
             try {
                 byte[]postDataBytes = sbParams.toString().getBytes("UTF-8");
-                //conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestProperty("Accept", "application/text");
                 conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
                 conn.setRequestMethod("POST");

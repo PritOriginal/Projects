@@ -73,14 +73,11 @@ public class ProfileActivity extends AppCompatActivity implements OnUserListener
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        //int id_ = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
-                //Intent intent = new Intent(this, Test.class);
-                //startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -100,7 +97,6 @@ public class ProfileActivity extends AppCompatActivity implements OnUserListener
             checkProject.setCompleted(completed);
             projects.set(indexCheckProject, checkProject);
             adapter_projects.setProjects(projects);
-            //System.out.println("Проект" + name + ";" + description + ";" + completed);
         }
         else {
             projects.remove(indexCheckProject);
@@ -138,14 +134,10 @@ public class ProfileActivity extends AppCompatActivity implements OnUserListener
         projects = proj;
         adapter_projects = new RVAdapter(this, projects,true,this);
         recyclerViewProjects.setAdapter(adapter_projects);
-//        progressBar.setVisibility(View.GONE);
-        // recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onProjectsError(String error) {
-        //noneProject.setVisibility(View.VISIBLE);
-//        progressBar.setVisibility(View.GONE);
     }
 
     @Override

@@ -21,7 +21,7 @@
         <item
             android:id="@+id/nav_people"
             android:icon="@drawable/ic_group_black_24dp"
-            android:title="Наставники и друзья" />
+            android:title="Преподаватели и друзья" />
         <item
             android:id="@+id/nav_tests"
             android:icon="@drawable/ic_projects"

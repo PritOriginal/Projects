@@ -39,8 +39,6 @@ public class ProfileMentor extends Fragment implements OnUserListener {
         name = (TextView) view.findViewById(R.id.profile_name);
         vk = (TextView) view.findViewById(R.id.profile_vk);
         raiting = (TextView) view.findViewById(R.id.raiting);
-        //r = test.getIntent().getExtras().getInt("raiting");
-        //name.setText("Махнатеев Степан");
 
         recyclerView = (RecyclerView)view.findViewById(R.id.rvAchievement);
         LinearLayoutManager llm = new LinearLayoutManager(main.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);

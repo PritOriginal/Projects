@@ -22,12 +22,8 @@ import java.util.List;
 class RVAdapterComponents extends RecyclerView.Adapter<RVAdapterComponents.ViewHolder> {
     @NonNull
     List<Component> components;
-    DBHelper dbHelper;
-    SQLiteDatabase database;
-    ArrayList<Integer> image = new ArrayList<>();
     private Context mContext;
     boolean project;
-    int idProject;
     RVAdapterComponents(Context mContext, List<Component> components, boolean project) {
         this.components = components;
         Collections.sort(this.components, new Comparator<Component>() {
@@ -39,18 +35,6 @@ class RVAdapterComponents extends RecyclerView.Adapter<RVAdapterComponents.ViewH
         });
         this.mContext = mContext;
         this.project = project;
-
-        //<<<<<=================== Типо картинки
-        /*
-        image = new ArrayList<>();
-        image.add(R.drawable.arduino_uno);
-        image.add(R.drawable.led_diode_5mm);
-        image.add(R.drawable.intel_edison);
-        image.add(R.drawable.joystick_overview);
-        image.add(R.drawable.ph_sensor);
-        image.add(R.drawable.raspberry_pi_3_model_b_plus);
-        image.add(R.drawable.sealed_temperature_sensor_ds18b20_0);
-    */
     }
 
     @Override

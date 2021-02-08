@@ -16,13 +16,13 @@ import java.util.List;
 public class RVAdapterAchievement extends RecyclerView.Adapter<RVAdapterAchievement.ViewHolder> {
     @NonNull
     List<Integer> achievements;
-    ArrayList<Integer> drawables = new ArrayList<Integer>();
+    ArrayList<Integer> image = new ArrayList<>();
     private Context mContext;
     RVAdapterAchievement (Context mContext, List<Integer> achievements){
         this.mContext = mContext;
         this.achievements = achievements;
-        drawables.add(R.drawable.hitech_kvantum);
-        drawables.add(R.drawable.promdisein_kvantum);
+        image.add(R.drawable.achivement);
+        image.add(R.drawable.achivement);
     }
     @Override
     public RVAdapterAchievement.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -33,7 +33,7 @@ public class RVAdapterAchievement extends RecyclerView.Adapter<RVAdapterAchievem
 
     @Override
     public void onBindViewHolder(@NonNull RVAdapterAchievement.ViewHolder viewHolder, int i) {
-        viewHolder.image.setImageResource(drawables.get(i));
+        viewHolder.image.setImageResource(image.get(i));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

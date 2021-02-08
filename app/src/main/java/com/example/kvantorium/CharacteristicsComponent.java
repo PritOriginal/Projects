@@ -56,26 +56,6 @@ public class CharacteristicsComponent extends Fragment implements OnComponentsLi
         }
 
         for (int i = 0; i < first.size(); i++) {
-            /*
-            //TextView t1 = new TextView(new ContextThemeWrapper(context.getApplicationContext(), R.style.TableItemCharacteristicsStyle1), null, 0);
-            TextView t1 = new TextView(context.getApplicationContext());
-            //t1.setTextAppearance(R.style.TableItemCharacteristicsStyle1);
-            t1.setText(first.get(i));
-            t1.setTextColor(R.color.text_unchecked);
-            t1.setBackgroundResource(R.color.table_1_item_characteristics);
-            t1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-            t1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            //TextView t2 = new TextView(new ContextThemeWrapper(context.getApplicationContext(), R.style.TableItemCharacteristicsStyle2), null, 0);
-            TextView t2 = new TextView(context.getApplicationContext());
-            //t2.setTextAppearance(R.style.TableItemCharacteristicsStyle2);
-            t2.setText(second.get(i));
-            t1.setTextColor(R.color.text_unchecked);
-            t1.setBackgroundResource(R.color.table_2_item_characteristics);
-            t1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-            t1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            linearLayout.addView(t1);
-            linearLayout.addView(t2);
-             */
             final View v1 = getLayoutInflater().inflate(R.layout.item_characteristics_1, null);
             TextView t1 = (TextView)v1.findViewById(R.id.characteristics_item_1);
             t1.setText(first.get(i) + ":");

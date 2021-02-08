@@ -26,7 +26,6 @@ public class RVAdapterProjectsMini extends RecyclerView.Adapter<RVAdapterProject
 
     @Override
     public RVAdapterProjectsMini.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        //View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.project_view, viewGroup, false);
         View v = LayoutInflater.from(mContext).inflate(R.layout.project_mini_view, viewGroup, false);
         RVAdapterProjectsMini.ViewHolder pvh = new RVAdapterProjectsMini.ViewHolder(v);
         return pvh;
@@ -35,9 +34,7 @@ public class RVAdapterProjectsMini extends RecyclerView.Adapter<RVAdapterProject
     @Override
     public void onBindViewHolder(@NonNull RVAdapterProjectsMini.ViewHolder viewHolder, final int i) {
         viewHolder.projectName.setText(projects.get(i).getName());
-        //viewHolder.projectName.setId(i);
         viewHolder.projectDescription.setText(projects.get(i).getDescription());
-        //viewHolder.projectDescription.setId(i);
         viewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

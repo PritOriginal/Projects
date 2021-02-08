@@ -37,7 +37,6 @@ public class ComponentsProject extends Fragment implements OnComponentsListener{
         return view;
     }
     public void setComponents() {
-        //components = dbHelper.getComponentsProject(database, id);
         adapter = new RVAdapterComponentsProject(context, components, this);
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.GONE);

@@ -49,8 +49,6 @@ public class GetStudents extends AsyncTask<URL, Integer, ArrayList<User>> {
             }
             i++;
         }
-
-
         try {
             String url = "http://192.168.1.14/PythonProject/server_test.py";
             URL urlObj = new URL(url);
@@ -58,7 +56,6 @@ public class GetStudents extends AsyncTask<URL, Integer, ArrayList<User>> {
 
             try {
                 byte[]postDataBytes = sbParams.toString().getBytes("UTF-8");
-                //conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestProperty("Accept", "application/text");
                 conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
                 conn.setRequestMethod("POST");
@@ -95,7 +92,6 @@ public class GetStudents extends AsyncTask<URL, Integer, ArrayList<User>> {
                     String firstName = jObject.getString("name");
                     String secondName = jObject.getString("secondname");
                     int group = jObject.getInt("class");
-                    //String role = jObject.getString("role");
                     String role = "";
                     User user = new User(id, firstName, secondName, role, group);
                     users.add(user);

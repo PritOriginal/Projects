@@ -98,16 +98,4 @@ public class GetTimeGroup extends AsyncTask<URL, Integer, ArrayList<String>> {
         }
         return time;
     }
-
-    /*
-    @Override
-    protected void onPostExecute(String time) {
-        //do stuff
-        if (mListener != null) {
-            ArrayList<String> request = new ArrayList<String>();
-            request.add(time);
-            mListener.onRequestCompleted(request);
-        }
-    }
-    */
 }

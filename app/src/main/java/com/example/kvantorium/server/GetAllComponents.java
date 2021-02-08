@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GetAllComponents extends AsyncTask<URL, Integer, ArrayList<Component>> {
-    //initiate vars
     private OnComponentsListener mListener;
     ProgressBar progressBar;
     ArrayList<Component> components = new ArrayList<Component>();
@@ -38,14 +37,8 @@ public class GetAllComponents extends AsyncTask<URL, Integer, ArrayList<Componen
     }
 
     protected ArrayList<Component> doInBackground(URL... urls) {
-        //do stuff
-
-
         HashMap<String, String> params = new HashMap<>();
         params.put("REQUEST", "getAllComponents");
-
-        String data = null;
-
         StringBuilder sbParams = new StringBuilder();
         int i = 0;
         for (String key : params.keySet()) {
@@ -61,17 +54,12 @@ public class GetAllComponents extends AsyncTask<URL, Integer, ArrayList<Componen
             }
             i++;
         }
-
-
         try {
-//            String params = "REQUEST=js";
             String url = "http://192.168.1.14/PythonProject/server_test.py";
             URL urlObj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
-
             try {
                 byte[]postDataBytes = sbParams.toString().getBytes("UTF-8");
-                //conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestProperty("Accept", "application/text");
                 conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
                 conn.setRequestMethod("POST");
@@ -81,16 +69,6 @@ public class GetAllComponents extends AsyncTask<URL, Integer, ArrayList<Componen
                 conn.getOutputStream().write(postDataBytes);
 
                 conn.connect();
-
-                /*
-                String paramsString = sbParams.toString();
-                //  String paramsString = "a=test";
-
-                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                wr.writeBytes(paramsString);
-                wr.flush();
-                wr.close();
-                 */
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -104,18 +82,8 @@ public class GetAllComponents extends AsyncTask<URL, Integer, ArrayList<Componen
                 }
 
                 in.close();
-
                 String result = result1.toString();
                 System.out.println("From server: " + result);
-/*
-                JSONObject JObject = new JSONObject(result);
-                String name = JObject.getString("name");
-                int count = JObject.getInt("count");
-                Component c = new Component();
-                c.setNameComponent(name);
-                c.setNumber(count);
-                components.add(c);
-*/
                 JSONObject JObject = new JSONObject(result);
                 JSONArray jArray = JObject.getJSONArray("components");
                 for (i = 0; i < jArray.length(); i++) {
@@ -132,10 +100,7 @@ public class GetAllComponents extends AsyncTask<URL, Integer, ArrayList<Componen
                     c.setNumber(count);
                     c.setImage(image);
                     components.add(c);
-                    //String tab1_text = jObject.getString("tab1_text");
-                    //int active = jObject.getInt("active");
                 }
-
                 } finally{
                     if (conn != null) {
                         conn.disconnect();
@@ -145,89 +110,6 @@ public class GetAllComponents extends AsyncTask<URL, Integer, ArrayList<Componen
             e.printStackTrace();
             }
             return components;
-
-
-
-
-/*
-        try {
-
-            //String url = "http://192.168.1.69/PythonProject/server_test.py";
-            String url = "http://192.168.243.90/PythonProject/server_test.py";
-            URL urlObj = new URL(url);
-            HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
-            try {
-                conn.setDoOutput(true);
-                conn.setDoInput(true);
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                conn.setRequestProperty("Accept","application/json");
-
-                conn.setReadTimeout(10000);
-                conn.setConnectTimeout(15000);
-
-                conn.connect();
-
-                String paramsString = sbParams.toString();
-                //  String paramsString = "a=test";
-
-                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                wr.writeBytes(paramsString);
-                wr.flush();
-                wr.close();
-            /*
-
-            Component c = new Component();
-            c.setNameComponent("Arduino");
-            c.setNumber(30);
-            components.add(c);
-            return components;
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                InputStream in = new BufferedInputStream(conn.getInputStream());
-                BufferedReader reader1 = new BufferedReader(new InputStreamReader(in));
-                StringBuilder result1 = new StringBuilder();
-                String line;
-                while ((line = reader1.readLine()) != null) {
-                    result1.append(line + "\n");
-                }
-
-                in.close();
-                String result = result1.toString();
-
-                JSONArray jArray = new JSONArray(result);
-                for(i=0; i < jArray.length(); i++) {
-
-                    JSONObject jObject = jArray.getJSONObject(i);
-
-                    String name = jObject.getString("name");
-                    int count = jObject.getInt("count");
-                    Component c = new Component();
-                    c.setNameComponent(name);
-                    c.setNumber(count);
-                    components.add(c);
-                    //String tab1_text = jObject.getString("tab1_text");
-                    //int active = jObject.getInt("active");
-
-                } // End Loop
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } finally {
-                if (conn != null) {
-                    conn.disconnect();
-                }
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return components;
-        */
     }
 
     @Override
@@ -240,8 +122,6 @@ public class GetAllComponents extends AsyncTask<URL, Integer, ArrayList<Componen
 
     @Override
     protected void onPostExecute(ArrayList<Component> components) {
-        //do stuff
-        //super.onPostExecute(components);
         if (mListener != null) {
             mListener.onComponentsCompleted(components);
         }

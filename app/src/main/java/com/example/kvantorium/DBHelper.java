@@ -135,56 +135,19 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void updateComponent(SQLiteDatabase db, int idComp, int number) {
-        /*
-        boolean haveComp = false;
-        ContentValues contentValues = new ContentValues();
-        Cursor cursor = db.query(DBHelper.TABLE_NAME2, null, null, null, null, null, null);
-        id--;
-        if (cursor.moveToFirst()) {
-            do {
-                int idColIndexComp = cursor.getColumnIndex(DBHelper.ID_PROJECT);
-                int idProject = cursor.getInt(idColIndexComp) - 1;
-                if (idProject == id) {
-                    int idCompColIndexComp = cursor.getColumnIndex(DBHelper.ID);
-                    int nameColIndexComp = cursor.getColumnIndex(DBHelper.NAME);
-                    int numberColIndexComp = cursor.getColumnIndex(DBHelper.NUMBER);
-                    int idCompon = cursor.getInt(idCompColIndexComp) - 1;
-                    String name = cursor.getString(nameColIndexComp);
-                    int numberComp = cursor.getInt(numberColIndexComp);
-                    if (name == nameComp) { // <<<================================================= Что то не так
-                        contentValues.put(DBHelper.NUMBER, numberComp + number);
-                        db.update(DBHelper.TABLE_NAME2, contentValues, DBHelper.ID + " = " + idCompon, null);
-                        haveComp = true;
-                    }
-                }
-            } while (cursor.moveToNext());
-        } else {
-            cursor.close();
-        }
-        if (haveComp == false) {
-            contentValues.put(DBHelper.ID_PROJECT, id);
-            contentValues.put(DBHelper.NAME, nameComp);
-            contentValues.put(DBHelper.NUMBER, number);
-            db.insert(DBHelper.TABLE_NAME2, null, contentValues);
-        }
-        */
         Cursor cursor1 = db.query(DBHelper.TABLE_NAME3, null, null, null, null, null, null);
         if (cursor1.moveToFirst()) {
             do {
                 int idColIndexComp = cursor1.getColumnIndex(DBHelper.ID);
                 int nameColIndexComp = cursor1.getColumnIndex(DBHelper.NAME);
-                //          int allColIndexComp = cursor.getColumnIndex(dbHelper.ALL_NUMBER);
                 int useColIndexComp = cursor1.getColumnIndex(DBHelper.USE_NUMBER);
                 int id = cursor1.getInt(idColIndexComp);
                 String name = cursor1.getString(nameColIndexComp);
-                //        int allNumber = cursor.getInt(allColIndexComp);
                 int useNumber = cursor1.getInt(useColIndexComp);
                 if (idComp == id) {
                     ContentValues contentValues1 = new ContentValues();
                     contentValues1.put(DBHelper.USE_NUMBER, useNumber + number);
-                    //contentValues1.put(DBHelper.LOST_NUMBER, allNumber - (useNumber + Integer.parseInt(e.getText().toString())));
                     db.update(DBHelper.TABLE_NAME3, contentValues1, DBHelper.ID + " = " + id, null);
-                    //                             dbHelper.onUpdate(database, DBHelper.TABLE_NAME3, );
                 }
             } while (cursor1.moveToNext());
         } else {

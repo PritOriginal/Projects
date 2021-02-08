@@ -30,11 +30,6 @@ public class Coder extends AsyncTask<String, Integer, ImageView> {
 
     @Override
     protected void onPreExecute() {
-   //     dialog = new ProgressDialog(act.getContext());
-   //     dialog.setTitle("Encoding");
-   //     dialog.setMessage("Please, wait...");
-   //     dialog.setCancelable(false);
-   //     dialog.show();
         super.onPreExecute();
     }
 
@@ -57,19 +52,6 @@ public class Coder extends AsyncTask<String, Integer, ImageView> {
 
     @Override
     protected void onPostExecute(ImageView image) {
-        /*
-        try {
-            dialog.dismiss();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-         */
-       /* ImageView old = (ImageView) act.getView().findViewById(ID);
-        if (old != null) {
-            ((FrameLayout) old.getParent()).removeViewInLayout(old);
-        }
-        */
         layout.addView(image, new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT));
         super.onPostExecute(image);

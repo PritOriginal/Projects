@@ -42,12 +42,6 @@ public class TestsFragment extends Fragment implements OnTestsListener {
         getTestsUser.execute();
         return view;
     }
-/*
-    public void update() {
-        adapter = new RVAdapterTests(main, tests);
-        recyclerView.setAdapter(adapter);
-    }
- */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

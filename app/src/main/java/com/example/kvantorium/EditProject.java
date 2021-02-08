@@ -21,8 +21,6 @@ public class EditProject extends AppCompatActivity implements OnProjectListener 
     SQLiteDatabase database;
     Project project = new Project();
     int id;
-//    int _id;
-   // int _idComp;
     String id_;
     final String componentsName[] = new String[]
             {"Ардуино",
@@ -41,8 +39,6 @@ public class EditProject extends AppCompatActivity implements OnProjectListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_project);
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_edit_project);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,50 +47,20 @@ public class EditProject extends AppCompatActivity implements OnProjectListener 
         nameProject = (EditText)findViewById(R.id.editNameProject);
         descriptionProject = (EditText)findViewById(R.id.editDescriptionProject);
         dbHelper = new DBHelper(this);
-        //dbHelperComponents = new DBHelperComponents(this);
         database = dbHelper.getWritableDatabase();
-        //  ID = getIntent().getExtras();
         USER_ID = getIntent().getExtras().getInt("idUser");
         id = getIntent().getExtras().getInt("id");
         id_ = String.valueOf(id);
-        //num.setText(Integer.toString(id));
         GetProject task = new GetProject(this, id);
         task.execute();
     }
     public void setProject() {
-        //Project p = dbHelper.getProject(database, id);
         nameProject.setText(project.getName());
         descriptionProject.setText(project.getDescription());
     }
-    /*
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.editProject:
-                ContentValues contentValues = new ContentValues();
-                String name = nameProject.getText().toString();
-                String description = descriptionProject.getText().toString();
-                contentValues.put("name", name);
-                contentValues.put("description", description);
-                //id++;
-                //dbHelper.onUpdate(database, DBHelper.TABLE_NAME, DBHelper.ID, String.valueOf(id), contentValues);
-                database.update(dbHelper.TABLE_NAME, contentValues, "id =" + id  , null);
-                dbHelper.close();
-                Intent intent = new Intent(EditProject.this, ProjectActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-                break;
-            case R.id.deleteProject:
-
-                break;
-        }
-    }
-
-     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.back_menu, menu);
         return true;
     }
@@ -111,24 +77,6 @@ public class EditProject extends AppCompatActivity implements OnProjectListener 
                 Intent intent1 = new Intent(EditProject.this, Main.class);
                 startActivity(intent1);
                 return true;
-                /*
-            case R.id.action_accept:
-                ContentValues contentValues = new ContentValues();
-                String name = nameProject.getText().toString();
-                String description = descriptionProject.getText().toString();
-                //contentValues.put("name", name);
-                //contentValues.put("description", description);
-                //id++;
-                //dbHelper.onUpdate(database, DBHelper.TABLE_NAME, DBHelper.ID, String.valueOf(id), contentValues);
-           //     database.update(dbHelper.TABLE_NAME, contentValues, "id =" + id  , null);
-                dbHelper.close();
-                ChangeProject task = new ChangeProject(id, name, description);
-                task.execute();
-                Intent intent = new Intent(EditProject.this, ProjectActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-                return true;
-                 */
             default:
                 return super.onOptionsItemSelected(item);
         }

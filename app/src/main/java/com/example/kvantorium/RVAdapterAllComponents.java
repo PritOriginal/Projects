@@ -54,8 +54,6 @@ public class RVAdapterAllComponents extends RecyclerView.Adapter<RVAdapterAllCom
             int drawable = mContext.getResources().getIdentifier(components.get(i).getImage(), "drawable", mContext.getPackageName());
             viewHolder.image.setImageResource(drawable);
         }
-        //viewHolder.useNumber.setText(String.valueOf(0));
-        //viewHolder.useNumber.setId(Integer.parseInt("1" + i));
         viewHolder.upNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
