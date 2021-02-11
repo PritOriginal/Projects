@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kvantorium">
+    package="com.example.projects">
 
     <application
         android:allowBackup="true"
@@ -11,37 +11,36 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".TestActivity"
+            android:name="com.example.projects.TestActivity"
             android:label="@string/test"
             android:theme="@style/AppTheme.NoActionBar"
             >
         </activity>
         <activity
-            android:name=".ProjectMentorActivity"
+            android:name="com.example.projects.ProjectMentorActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/info_project"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Main2Activity"
+            android:name="com.example.projects.Main2Activity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ComponentsInfo"
+            android:name="com.example.projects.ComponentsInfo"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/info_component"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ProjectActivity"
+            android:name="com.example.projects.ProjectActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/info_project"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.example.projects.LoginActivity"
             android:label="@string/login"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AllComponents" />
         <activity
-            android:name=".Main"
+            android:name="com.example.projects.Main"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
@@ -52,21 +51,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddComponent"
+            android:name="com.example.projects.AddComponent"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_add_component"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".EditProject"
+            android:name="com.example.projects.EditProject"
             android:label="@string/edit_project"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CreateProject"
+            android:name="com.example.projects.CreateProject"
             android:label="@string/create_project"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity" />
+        <activity android:name="com.example.projects.MainActivity" />
         <activity
-            android:name=".ProfileActivity"
+            android:name="com.example.projects.ProfileActivity"
             android:label="@string/profile_student"
             android:theme="@style/AppTheme.NoActionBar" />
 

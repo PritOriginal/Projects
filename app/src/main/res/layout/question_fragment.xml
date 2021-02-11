@@ -19,6 +19,18 @@
     <RadioGroup
         android:id="@+id/radio_group_answers"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@drawable/radiobutton_selector"
+            android:checked="false"
+            android:paddingLeft="8dp"
+            android:text="RadioButton"
+            android:textSize="18sp" />
+    </RadioGroup>
 
 </LinearLayout>

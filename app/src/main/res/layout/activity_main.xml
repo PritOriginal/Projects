@@ -7,18 +7,6 @@
     android:background="@color/background_gray"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/noneProject"
-        android:layout_width="513dp"
-        android:layout_height="501dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/noneproject" />
-
     <ProgressBar
         android:id="@+id/progressBarProjects"
         style="@style/Widget.AppCompat.ProgressBar"
