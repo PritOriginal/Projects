@@ -1,5 +1,7 @@
 package com.example.projects;
 
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
@@ -8,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -23,9 +27,11 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
     PagerAdapterQuestions pageAdapter;
     RadioGroup radioGroup;
     TabLayout tabLayout;
+    ProgressBar progressBar;
     FloatingActionButton next;
     ArrayList<Question> questions = new ArrayList<Question>();
     int indexQuestion = 0;
+    int indexTab = 0;
     public int id;
     public int USER_ID;
     @Override
@@ -45,10 +51,10 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
         question = (TextView) findViewById(R.id.text_question);
         radioGroup = (RadioGroup) findViewById(R.id.radio_group_answers);
         tabLayout = (TabLayout) findViewById(R.id.tabs_questions);
+        progressBar = (ProgressBar) findViewById(R.id.progressTest);
         next = (FloatingActionButton) findViewById(R.id.buttonNextQuestion);
         GetTest getTest = new GetTest(this, this, id);
         getTest.execute();
-
     }
 /*
     public void setTest(){
@@ -69,10 +75,15 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
     public void NextQuestion(View view) {
         if (viewPager.getCurrentItem() != pageAdapter.getCount() - 1) {
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+            System.out.println((int) (progressBar.getProgress() + 1f/questions.size()*1000));
+            ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar,"progress", progressBar.getProgress(), (int) (progressBar.getProgress() + 1f/questions.size()*1000));
+            progressAnimator.setDuration(150);
+            progressAnimator.setInterpolator(new LinearInterpolator());
+            progressAnimator.start();
+           // progressBar.setProgress((int)(progressBar.getProgress() + 1f/questions.size()*1000));
         } else {
             SendTest sendTest = new SendTest(this, id, USER_ID, pageAdapter.getQuestions());
             sendTest.execute();
-
         }
     }
 
@@ -83,8 +94,9 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
         for (int i = 0; i < questions.size(); i++) {
             TabItem tabItem = new TabItem(this);
             //TabLayout.Tab tab = new TabLayout.Tab();
-       //     tabLayout.addTab(tabLayout.newTab().);
+            tabLayout.addTab(tabLayout.newTab().setText(String.valueOf(i+1)));
         }
+        progressBar.setProgress(1/questions.size());
         pageAdapter = new PagerAdapterQuestions(getSupportFragmentManager(), questions, tabLayout);
         viewPager.setAdapter(pageAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -92,6 +104,11 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar,"progress", progressBar.getProgress(), (int) (progressBar.getProgress() + 1f/questions.size()*1000*(tab.getPosition()-indexTab)));
+                progressAnimator.setDuration(150);
+                progressAnimator.setInterpolator(new LinearInterpolator());
+                progressAnimator.start();
+                indexTab = tab.getPosition();
             }
 
             @Override

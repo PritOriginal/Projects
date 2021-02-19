@@ -186,7 +186,6 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectListe
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
         }
-
     }
 
     @Override

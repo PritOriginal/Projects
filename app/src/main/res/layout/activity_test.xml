@@ -28,12 +28,14 @@
             android:layout_height="wrap_content" />
 
         <ProgressBar
-            android:id="@+id/progressBar_questions"
+            android:id="@+id/progressTest"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:progress="17"
-            android:progressTint="@android:color/holo_green_light" />
+            android:max="1000"
+            android:progress="333"
+            android:progressTint="@android:color/holo_green_light"
+            />
 
     </android.support.design.widget.AppBarLayout>
 
