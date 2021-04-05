@@ -21,8 +21,9 @@ import com.example.projects.server.SendTest;
 import java.util.ArrayList;
 
 public class TestActivity extends AppCompatActivity implements OnTestsListener {
-    Test test;
+    public Test test;
     TextView question;
+    TextView number_questions;
     ViewPager viewPager;
     PagerAdapterQuestions pageAdapter;
     RadioGroup radioGroup;
@@ -30,7 +31,7 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
     ProgressBar progressBar;
     FloatingActionButton next;
     ArrayList<Question> questions = new ArrayList<Question>();
-    int indexQuestion = 0;
+    int indexQuestion = 1;
     int indexTab = 0;
     public int id;
     public int USER_ID;
@@ -49,6 +50,7 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
         viewPager = (ViewPager)findViewById(R.id.viewPagerQuestions);
 
         question = (TextView) findViewById(R.id.text_question);
+        number_questions = (TextView) findViewById(R.id.number_questions);
         radioGroup = (RadioGroup) findViewById(R.id.radio_group_answers);
         tabLayout = (TabLayout) findViewById(R.id.tabs_questions);
         progressBar = (ProgressBar) findViewById(R.id.progressTest);
@@ -73,7 +75,9 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
     }
  */
     public void NextQuestion(View view) {
-        if (viewPager.getCurrentItem() != pageAdapter.getCount() - 1) {
+        if (viewPager.getCurrentItem() < pageAdapter.getCount() - 1) {
+            indexQuestion++;
+            number_questions.setText(String.valueOf(indexQuestion) + '/' +questions.size());
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
             System.out.println((int) (progressBar.getProgress() + 1f/questions.size()*1000));
             ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar,"progress", progressBar.getProgress(), (int) (progressBar.getProgress() + 1f/questions.size()*1000));
@@ -81,9 +85,16 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
             progressAnimator.setInterpolator(new LinearInterpolator());
             progressAnimator.start();
            // progressBar.setProgress((int)(progressBar.getProgress() + 1f/questions.size()*1000));
-        } else {
+        } else if (viewPager.getCurrentItem() == pageAdapter.getCount() - 1) {
+            pageAdapter.finish();
+            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+            System.out.println((int) (progressBar.getProgress() + 1f/questions.size()*1000));
+            ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar,"progress", progressBar.getProgress(), (int) (progressBar.getProgress() + 1f/questions.size()*1000));
+            progressAnimator.setDuration(150);
+            progressAnimator.setInterpolator(new LinearInterpolator());
+            progressAnimator.start();
             SendTest sendTest = new SendTest(this, id, USER_ID, pageAdapter.getQuestions());
-            sendTest.execute();
+          //  sendTest.execute();
         }
     }
 
@@ -91,9 +102,8 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
     public void onTestsCompleted(ArrayList<Test> tests) {
         test = tests.get(0);
         questions = test.getQuestions();
+        number_questions.setText(String.valueOf(indexQuestion) + '/' +questions.size());
         for (int i = 0; i < questions.size(); i++) {
-            TabItem tabItem = new TabItem(this);
-            //TabLayout.Tab tab = new TabLayout.Tab();
             tabLayout.addTab(tabLayout.newTab().setText(String.valueOf(i+1)));
         }
         progressBar.setProgress(1/questions.size());
@@ -109,6 +119,8 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
                 progressAnimator.setInterpolator(new LinearInterpolator());
                 progressAnimator.start();
                 indexTab = tab.getPosition();
+                indexQuestion = indexTab + 1;
+                number_questions.setText(String.valueOf(indexQuestion) + '/' + questions.size());
             }
 
             @Override

@@ -7,11 +7,16 @@ public class Question {
     private String question;
     private ArrayList<Answer> answers;
     private int id_selected;
+    private boolean correct;
 
     public Question(int id, String question, ArrayList<Answer> answers) {
         this.id = id;
         this.question = question;
         this.answers = answers;
+    }
+    public Question(String question, boolean correct) {
+        this.question = question;
+        this.correct = correct;
     }
 
     public int getId() {
@@ -40,5 +45,12 @@ public class Question {
     }
     public void setSelected(int id_selected) {
         this.id_selected = id_selected;
+    }
+
+    public boolean isCorrect() {
+        return correct;
+    }
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
     }
 }

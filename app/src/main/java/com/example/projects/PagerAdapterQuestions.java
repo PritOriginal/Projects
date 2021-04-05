@@ -10,21 +10,29 @@ import java.util.ArrayList;
 public class PagerAdapterQuestions extends FragmentPagerAdapter implements OnQuestionsListener {
     ArrayList<Question> questions;
     TabLayout tabLayout;
+    private int numOfTabs;
+
     public PagerAdapterQuestions(FragmentManager fm, ArrayList<Question> questions, TabLayout tabLayout) {
         super(fm);
         this.questions = questions;
         this.tabLayout = tabLayout;
+        numOfTabs = questions.size();
     }
 
     @Override
     public Fragment getItem(int i) {
-        QuestionFragment questionFragment = new QuestionFragment(questions.get(i), this, i);
-        return questionFragment;
+        if (i < questions.size()) {
+            QuestionFragment questionFragment = new QuestionFragment(questions.get(i), this, i);
+            return questionFragment;
+        } else {
+            TestResultsFragment testResultsFragment = new TestResultsFragment();
+            return testResultsFragment;
+        }
     }
 
     @Override
     public int getCount() {
-        return questions.size();
+        return numOfTabs;
     }
 
     @Override
@@ -34,5 +42,15 @@ public class PagerAdapterQuestions extends FragmentPagerAdapter implements OnQue
 
     public ArrayList<Question> getQuestions() {
         return questions;
+    }
+
+    public void finish() {
+        numOfTabs = questions.size() + 1;
+        notifyDataSetChanged();
+    }
+
+    public Fragment finishTest() {
+        TestResultsFragment testResultsFragment = new TestResultsFragment();
+        return testResultsFragment;
     }
 }
