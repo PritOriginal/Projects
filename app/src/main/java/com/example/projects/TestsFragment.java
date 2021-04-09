@@ -16,6 +16,8 @@ import com.example.projects.server.GetTestsUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 public class TestsFragment extends Fragment implements OnTestsListener {
     RecyclerView recyclerView;
     ProgressBar progressBar;
@@ -72,5 +74,25 @@ public class TestsFragment extends Fragment implements OnTestsListener {
         intent.putExtra("id", checkTest.getId());
         intent.putExtra("idUser", main.USER_ID);
         startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {return;}
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    boolean completed = data.getBooleanExtra("completed",false);
+                    int result = data.getIntExtra("results", 0);
+                    checkTest.setCompleted(completed);
+                    checkTest.setProgress(result);
+                    tests.set(indexCheckTest, checkTest);
+                    adapter.setTests(tests);
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
     }
 }

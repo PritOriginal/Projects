@@ -2,6 +2,7 @@ package com.example.projects;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
@@ -33,8 +34,10 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
     ArrayList<Question> questions = new ArrayList<Question>();
     int indexQuestion = 1;
     int indexTab = 0;
+    int results;
     public int id;
     public int USER_ID;
+    boolean finishTest = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +88,7 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
             progressAnimator.setInterpolator(new LinearInterpolator());
             progressAnimator.start();
            // progressBar.setProgress((int)(progressBar.getProgress() + 1f/questions.size()*1000));
-        } else if (viewPager.getCurrentItem() == pageAdapter.getCount() - 1) {
+        } else if (viewPager.getCurrentItem() == pageAdapter.getCount() - 1 & !finishTest) {
             pageAdapter.finish();
             viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
             System.out.println((int) (progressBar.getProgress() + 1f/questions.size()*1000));
@@ -93,8 +96,15 @@ public class TestActivity extends AppCompatActivity implements OnTestsListener {
             progressAnimator.setDuration(150);
             progressAnimator.setInterpolator(new LinearInterpolator());
             progressAnimator.start();
+            finishTest = true;
             SendTest sendTest = new SendTest(this, id, USER_ID, pageAdapter.getQuestions());
-          //  sendTest.execute();
+            sendTest.execute();
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra("completed", true);
+            intent.putExtra("results", results);
+            setResult(RESULT_OK, intent);
+            this.finish();
         }
     }
 

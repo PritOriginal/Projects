@@ -72,4 +72,9 @@ public class RVAdapterTests extends RecyclerView.Adapter<RVAdapterTests.ViewHold
             completedImage = (ImageView)itemView.findViewById(R.id.completedTest);
         }
     }
+
+    public void setTests(List<Test> tests) {
+        this.tests = tests;
+        notifyDataSetChanged();
+    }
 }

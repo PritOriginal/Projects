@@ -51,7 +51,6 @@ public class QuestionFragment extends Fragment {
             });
             radioGroup.addView(radioButton);
             radioButton.setChecked(answers.get(i).getId() == question.getSelected() ? true : false);
-
         }
 
         return view;

@@ -12,5 +12,9 @@
             android:id="@+id/nav_people_mentor"
             android:icon="@drawable/ic_group_black_24dp"
             android:title="Ученики" />
+        <item
+            android:id="@+id/nav_tests_mentor"
+            android:icon="@drawable/check_box_objective_checked"
+            android:title="Тесты" />
     </group>
 </menu>
