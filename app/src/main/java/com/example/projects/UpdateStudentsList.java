@@ -1,8 +1,7 @@
 package com.example.projects;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.projects.server.GetStudents;
 import com.example.projects.server.GetTimeGroup;
 
 import java.util.ArrayList;
@@ -22,29 +20,29 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class PeopleMentor extends Fragment implements OnUsersListener, OnUpdateStudents {
-
-    Main2Activity main;
+public class UpdateStudentsList extends AsyncTask<String, Integer, ArrayList<View>> {
+    Context mContext;
 
     ProgressBar progressBar;
-    LinearLayout linearLayout;
-    RVAdapterUsers2 adapter;
+    private OnUpdateStudents mListener;
     List<User> users = new ArrayList<User>();
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.people_mentor, container,
-                false);
+    RVAdapterUsers2 adapter;
+    LinearLayout linearLayout;
+    ArrayList<View> students = new ArrayList<View>();
 
-        linearLayout = (LinearLayout)view.findViewById(R.id.people_list);
-        progressBar = (ProgressBar)view.findViewById(R.id.progressBarStudentsList);
-
-        GetStudents getStudents = new GetStudents(main,this);
-        getStudents.execute();
-
-        return view;
+    public UpdateStudentsList(Context mContext, OnUpdateStudents mListener,List<User> users, LinearLayout linearLayout, ProgressBar progressBar) {
+        this.mContext = mContext;
+        this.mListener = mListener;
+        this.users = users;
+        this.linearLayout = linearLayout;
+        this.progressBar = progressBar;
     }
 
+    @Override
+    protected ArrayList<View> doInBackground(String... strings) {
+        sorting();
+        return students;
+    }
     public void sorting() {
         final ArrayList<Integer> group = new ArrayList<Integer>();
         ArrayList<ArrayList<User>> users_group = new ArrayList<ArrayList<User>>();
@@ -96,21 +94,20 @@ public class PeopleMentor extends Fragment implements OnUsersListener, OnUpdateS
         update(group, users_group_);
     }
 
-    public void update(final ArrayList<Integer> group, ArrayList<ArrayList<User>> users_group)
-    {
-        List<View> students = new ArrayList<View>();
+    public void update(final ArrayList<Integer> group, ArrayList<ArrayList<User>> users_group) {
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         for (int i = 0; i < users_group.size(); i++) {
-            final View v1 = getLayoutInflater().inflate(R.layout.group_list, null);
+            final View v1 = inflater.inflate(R.layout.group_list, null);
             TextView t1 = (TextView) v1.findViewById(R.id.name_group);
             t1.setText("Группа " + group.get(i));
 
             final RecyclerView groupList = (RecyclerView) v1.findViewById(R.id.group_list);
-            LinearLayoutManager llm = new LinearLayoutManager(main.getApplicationContext());
+            LinearLayoutManager llm = new LinearLayoutManager(mContext.getApplicationContext());
             groupList.setLayoutManager(llm);
 
-            adapter = new RVAdapterUsers2(main, users_group.get(i));
+            adapter = new RVAdapterUsers2(mContext, users_group.get(i));
             groupList.setAdapter(adapter);
-            linearLayout.addView(v1);
+            students.add(v1);
 
             final ImageView group_open = (ImageView)v1.findViewById(R.id.group_open);
             LinearLayout title_group = (LinearLayout)v1.findViewById(R.id.title_group);
@@ -135,8 +132,8 @@ public class PeopleMentor extends Fragment implements OnUsersListener, OnUpdateS
 
             TextView time_group = (TextView)v1.findViewById(R.id.time_group);
             TextView day_week_group = (TextView)v1.findViewById(R.id.day_week_group);
-            GetTimeGroup getTimeGroup = new GetTimeGroup(main, group.get(i));
-            getTimeGroup.execute();
+            GetTimeGroup getTimeGroup = new GetTimeGroup(mContext, group.get(i));
+            getTimeGroup.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             try {
                 ArrayList<String> time = getTimeGroup.get();
                 time_group.setText(time.get(0));
@@ -150,46 +147,17 @@ public class PeopleMentor extends Fragment implements OnUsersListener, OnUpdateS
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (context instanceof Main2Activity) {
-            this.main = (Main2Activity) context;
+    protected void onProgressUpdate(Integer... values) {
+        super.onProgressUpdate(values);
+        if (this.progressBar != null) {
+            progressBar.setProgress(values[0]);
         }
     }
 
     @Override
-    public void onUsersCompleted(ArrayList<User> us) {
-        users = us;
-     //   sorting();
-        UpdateStudentsList updateStudentsList = new UpdateStudentsList(main,this, users, linearLayout, progressBar);
-        updateStudentsList.execute();
-        /*
-        try {
-            List<View> students = updateStudentsList.get();
-            for(int i = 0;i < students.size();i++) {
-                linearLayout.addView(students.get(i));
-            }
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-         */
-    }
-
-    @Override
-    public void onUsersError(String error) {
-
-    }
-
-    @Override
-    public void onUpdateStudents(ArrayList<View> students) {
-        progressBar.setVisibility(View.GONE);
-        List<View> student = students;
-        for(int i = 0;i < students.size();i++) {
-            linearLayout.addView(students.get(i));
+    protected void onPostExecute(ArrayList<View> students) {
+        if (mListener != null) {
+            mListener.onUpdateStudents(students);
         }
     }
 }

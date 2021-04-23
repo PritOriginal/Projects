@@ -36,13 +36,19 @@ public class GetTestsUser extends AsyncTask<URL, Integer, ArrayList<Test>> {
         this.id = id;
         this.progressBar = progressBar;
     }
+    public GetTestsUser(Context mContext, OnTestsListener mListener, ProgressBar progressBar) {
+        this.mContext = mContext;
+        this.mListener = mListener;
+        this.progressBar = progressBar;
+    }
 
     @Override
     protected ArrayList<Test> doInBackground(URL... urls) {
         HashMap<String, String> params = new HashMap<>();
         params.put("REQUEST", "getTestsUser");
-        params.put("ID", String.valueOf(id));
-
+        if (id != 0) {
+            params.put("ID", String.valueOf(id));
+        }
         StringBuilder sbParams = new StringBuilder();
         int i = 0;
         for (String key : params.keySet()) {

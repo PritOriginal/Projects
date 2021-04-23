@@ -101,6 +101,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             fragment = new ProfileMentor();
         } else if (id == R.id.nav_people_mentor) {
             fragment = new PeopleMentor();
+        } else if (id == R.id.nav_tests_mentor) {
+            fragment = new TestsMentorFragment();
         }
 
         // Вставляем фрагмент, заменяя текущий фрагмент
