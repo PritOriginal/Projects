@@ -31,7 +31,7 @@
 	AddHandler cgi-script .py
 	ScriptInterpreterSource Registry-Strict
 6. Сохраняеим изменения и закрываем файл. Напротив модуля Apache нажмаем на кнопку Start.
-7. В папке указанной при установке XAMPP открываем папку htdocs и копируем в неё скрипт сервера server.py и файл базы данных mydatabase.db, находящиеся в папке Server.
+7. В папке указанной при установке XAMPP открываем папку htdocs и копируем в неё скрипт сервера server.py и файл базы данных mydatabase.db, находящиеся в репозитории https://github.com/PritOriginal/ServerProjects
 8. Открываем скрипт server.py и в самой первой строке прописываем путу к python.exe (например #!C:\Users\...\AppData\Local\Programs\Python\Python37-32\python.exe)
 9. Запускаем Android Studio и открываем проект с названием Projects.
 10. Открываем файл strings.xml, находящийся в папке \res\values , и в строке с именем "url" прописываем путь на серверный скрипт в формате - http://ваш_ip/server.py (например http://192.168.243.90/server.py)
