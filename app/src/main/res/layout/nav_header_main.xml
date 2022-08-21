@@ -18,7 +18,7 @@
         android:layout_height="80dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/kvantorium_3" />
+        app:srcCompat="@drawable/organization" />
 
     <TextView
         android:id="@+id/title_name"
@@ -33,7 +33,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text='Детский технопарк "Кванториум"'
+        android:text="Название организации"
         android:textColor="@android:color/darker_gray" />
 
 </LinearLayout>
